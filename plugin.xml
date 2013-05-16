@@ -2,10 +2,14 @@
 
 <plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
 xmlns:android="http://schemas.android.com/apk/res/android"
-id="org.apache.cordova.core">
+id="org.apache.cordova.core.BatteryListener">
     version="0.1.0">
     <name>Battery</name>
 
+    <js-module src="www/battery.js" name="battery">
+        <clobbers target="window.battery" />
+    </js-module>
+    
     <!-- android -->
     <platform name="android">
         <config-file target="res/xml/config.xml" parent="/cordova/plugins">
@@ -13,5 +17,15 @@ id="org.apache.cordova.core">
         </config-file>
 
         <source-file src="BatteryListener.java" target-dir="org/apache/cordova/core" />
-       </platform>
+    </platform>
+    
+    <!-- ios -->
+    <platform name="ios">    
+        <config-file target="config.xml" parent="plugins">
+	        <plugin name="Battery" value="CDVBattery" /> 
+        </config-file>
+        <header-file src="src/ios/CDVBattery.h" />
+	    <source-file src="src/ios/CDVBattery.m" />
+    </platform>
+    
 </plugin>
