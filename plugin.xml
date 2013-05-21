@@ -12,17 +12,21 @@ id="org.apache.cordova.core.BatteryListener">
     
     <!-- android -->
     <platform name="android">
-        <config-file target="res/xml/config.xml" parent="/cordova/plugins">
-            <plugin name="Battery" value="org.apache.cordova.core.BatteryListener"/>
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="Battery" >
+                <param name="android-package" value="org.apache.cordova.core.BatteryListener"/>
+            </feature>
         </config-file>
 
-        <source-file src="BatteryListener.java" target-dir="org/apache/cordova/core" />
+        <source-file src="src/android/BatteryListener.java" target-dir="src/org/apache/cordova/core" />
     </platform>
     
     <!-- ios -->
     <platform name="ios">    
-        <config-file target="config.xml" parent="plugins">
-	        <plugin name="Battery" value="CDVBattery" /> 
+        <config-file target="config.xml" parent="/*">
+            <feature name="Battery">
+                <param name="ios-package" value="CDVBattery" /> 
+            </feature>
         </config-file>
         <header-file src="src/ios/CDVBattery.h" />
 	    <source-file src="src/ios/CDVBattery.m" />
