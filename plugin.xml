@@ -7,7 +7,7 @@ id="org.apache.cordova.core.BatteryListener">
     <name>Battery</name>
 
     <js-module src="www/battery.js" name="battery">
-        <clobbers target="window.battery" />
+        <clobbers target="navigator.battery" />
     </js-module>
     
     <!-- android -->
