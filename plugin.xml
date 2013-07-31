@@ -17,11 +17,11 @@
     <platform name="android">
         <config-file target="res/xml/config.xml" parent="/*">
             <feature name="Battery" >
-                <param name="android-package" value="org.apache.cordova.core.BatteryListener"/>
+                <param name="android-package" value="org.apache.cordova.batterystatus.BatteryListener"/>
             </feature>
         </config-file>
 
-        <source-file src="src/android/BatteryListener.java" target-dir="src/org/apache/cordova/core" />
+        <source-file src="src/android/BatteryListener.java" target-dir="src/org/apache/cordova/batterystatus" />
     </platform>
     
     <!-- ios -->
