@@ -5,7 +5,7 @@
       version="0.1.0">
     <name>Battery</name>
     <description>Cordova Battery Plugin</description>
-    <license>Apache</license>
+    <license>Apache 2.0</license>
     <keywords>cordova,battery</keywords>
 
     <js-module src="www/battery.js" name="battery">
