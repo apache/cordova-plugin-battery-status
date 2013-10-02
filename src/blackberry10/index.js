@@ -19,8 +19,8 @@
  *
 */
 
-    var _clientListeners = {},
-        _webkitBattery = navigator.webkitBattery || navigator.battery;
+var _clientListeners = {},
+    _webkitBattery = navigator.webkitBattery || navigator.battery;
 
 module.exports = {
     start: function (success, fail, args, env) {
@@ -73,5 +73,10 @@ module.exports = {
             delete _clientListeners[env.webview.id];
             result.noResult(false);
         }
+    },
+    reset: function () {
+        _webkitBattery.onchargingchange = null;
+        _webkitBattery.onlevelchange = null;
+        _clientListeners = {};
     }
 };
