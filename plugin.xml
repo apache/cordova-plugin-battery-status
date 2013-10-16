@@ -25,7 +25,18 @@
 
         <source-file src="src/android/BatteryListener.java" target-dir="src/org/apache/cordova/batterystatus" />
     </platform>
-    
+
+    <!-- amazon-fireos -->
+    <platform name="amazon-fireos">
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="Battery" >
+                <param name="android-package" value="org.apache.cordova.batterystatus.BatteryListener"/>
+            </feature>
+        </config-file>
+
+        <source-file src="src/android/BatteryListener.java" target-dir="src/org/apache/cordova/batterystatus" />
+    </platform>
+
     <!-- ios -->
     <platform name="ios">    
         <config-file target="config.xml" parent="/*">
