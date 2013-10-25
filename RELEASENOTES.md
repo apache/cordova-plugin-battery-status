@@ -24,3 +24,7 @@
 * CB-4889 bumping&resetting version
 * [CB-4752] Incremented plugin version on dev branch.
 * CB-4889 renaming org.apache.cordova.core.battery-status to org.apache.cordova.battery-status
+
+ ### 0.2.4 (Oct 25, 2013)
+* CB-5128: added repo + issue tag to plugin.xml for battery status plugin
+* [CB-4915] Incremented plugin version on dev branch.
