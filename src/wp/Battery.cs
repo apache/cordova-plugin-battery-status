@@ -29,23 +29,25 @@ namespace WPCordovaClassLib.Cordova.Commands
 {
     /// <summary>
     /// Listens for changes to the state of the battery on the device.
-    /// Currently only the "isPlugged" parameter available via native APIs.
     /// </summary>
     public class Battery : BaseCommand
     {
         private bool isPlugged = false;
         private EventHandler powerChanged;
+        private Windows.Phone.Devices.Power.Battery battery;
 
         public Battery()
         {
             powerChanged = new EventHandler(DeviceStatus_PowerSourceChanged);
             isPlugged = DeviceStatus.PowerSource.ToString().CompareTo("External") == 0;
+            battery = Windows.Phone.Devices.Power.Battery.GetDefault();
         }
 
         public void start(string options)
         {
             // Register power changed event handler
             DeviceStatus.PowerSourceChanged += powerChanged;
+            battery.RemainingChargePercentChanged += Battery_RemainingChargePercentChanged;
 
             PluginResult result = new PluginResult(PluginResult.Status.NO_RESULT);
             result.KeepCallback = true;
@@ -55,6 +57,7 @@ namespace WPCordovaClassLib.Cordova.Commands
         {
             // Unregister power changed event handler
             DeviceStatus.PowerSourceChanged -= powerChanged;
+            battery.RemainingChargePercentChanged -= Battery_RemainingChargePercentChanged;
         }
 
         private void DeviceStatus_PowerSourceChanged(object sender, EventArgs e)
@@ -65,10 +68,17 @@ namespace WPCordovaClassLib.Cordova.Commands
             DispatchCommandResult(result);
         }
 
+        private void Battery_RemainingChargePercentChanged(object sender, object e)
+        {
+            PluginResult result = new PluginResult(PluginResult.Status.OK, GetCurrentBatteryStateFormatted());
+            result.KeepCallback = true;
+            DispatchCommandResult(result);
+        }
+
         private string GetCurrentBatteryStateFormatted()
         {
             string batteryState = String.Format("\"level\":{0},\"isPlugged\":{1}",
-                                                    "null",
+                                                    battery.RemainingChargePercent,
                                                     isPlugged ? "true" : "false"
                             );
             batteryState = "{" + batteryState + "}";

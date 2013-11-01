@@ -45,7 +45,7 @@ Supported Platforms
 - Windows Phone 7 and 8
 - Tizen
 
-Windows Phone 7 and 8 Quirks
+Windows Phone 7 Quirks
 ----------------------
 
 The `level` property is unavailable as Windows Phone 7 does not provide
