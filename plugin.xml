@@ -36,6 +36,12 @@
 
         <source-file src="src/android/BatteryListener.java" target-dir="src/org/apache/cordova/batterystatus" />
     </platform>
+    
+    <!-- ubuntu -->
+    <platform name="ubuntu">
+        <header-file src="src/ubuntu/battery.h" />
+        <source-file src="src/ubuntu/battery.cpp" />
+    </platform>
 
     <!-- ios -->
     <platform name="ios">    
