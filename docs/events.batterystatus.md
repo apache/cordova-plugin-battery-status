@@ -49,8 +49,8 @@ Windows Phone 7 Quirks
 ----------------------
 
 The `level` property is unavailable as Windows Phone 7 does not provide
-native APIs for determining battery level. The `isPlugged` parameter
-_is_ supported.
+native APIs for determining battery level. The level value returned on Windows Phone 7 devices will always be -1. 
+The `isPlugged` parameter _is_ supported.
 
 Quick Example
 -------------
