@@ -117,7 +117,7 @@ properties:
 Applications typically should use `window.addEventListener` to
 attach an event listener once the `deviceready` event fires.
 
-## Supported Platforms
+### Supported Platforms
 
 - Amazon Fire OS
 - iOS
@@ -125,7 +125,7 @@ attach an event listener once the `deviceready` event fires.
 - BlackBerry 10
 - Tizen
 
-## Example
+### Example
 
     window.addEventListener("batterylow", onBatteryLow, false);
 
