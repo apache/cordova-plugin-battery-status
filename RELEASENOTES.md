@@ -34,3 +34,6 @@
 * wp8 add support in level
 * add ubuntu platform
 * 1. Updated platform name amazon->amazon-fireos. Deleted src files. 2. Change to use amazon-fireos as the platform if user agent string contains 'cordova-amazon-fireos'
+
+### 0.2.6 (Jan 02, 2014)
+* CB-5658 Add doc/index.md for Battery Status.
