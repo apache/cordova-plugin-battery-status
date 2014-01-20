@@ -83,5 +83,11 @@
 
         <source-file src="src/wp/Battery.cs" />
     </platform>
-    
+
+    <!-- tizen -->
+    <platform name="tizen">
+        <js-module src="src/tizen/BatteryStatusProxy.js" name="BatteryStatusProxy">
+            <runs/>
+        </js-module>
+    </platform>
 </plugin>
