@@ -37,3 +37,6 @@
 
 ### 0.2.6 (Jan 02, 2014)
 * CB-5658 Add doc/index.md for Battery Status.
+
+### 0.2.7 (Feb 05, 2014)
+* Add Tizen plugin.
