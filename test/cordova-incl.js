@@ -28,6 +28,8 @@ if (/cordova-amazon-fireos/.exec(navigator.userAgent)) {
     PLAT = 'ios';
 } else if (/(BB10)|(PlayBook)|(BlackBerry)/.exec(navigator.userAgent)) {
     PLAT = 'blackberry';
+} else if (/(Mozilla)|(Firefox)/.exec(navigator.userAgent)) {
+    PLAT = 'firefoxos';
 }
 
 var scripts = document.getElementsByTagName('script');

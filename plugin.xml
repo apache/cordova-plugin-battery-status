@@ -83,5 +83,16 @@
 
         <source-file src="src/wp/Battery.cs" />
     </platform>
-    
+
+    <!-- firefoxos -->
+    <platform name="firefoxos">
+        <config-file target="config.xml" parent="/*">
+            <feature name="Battery">
+                <param name="firefoxos-package" value="Battery" />
+            </feature>
+        </config-file>
+        <js-module src="src/firefoxos/BatteryProxy.js" name="Battery">
+            <runs />
+        </js-module>
+    </platform>
 </plugin>
