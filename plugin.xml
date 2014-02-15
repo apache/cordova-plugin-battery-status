@@ -90,4 +90,11 @@
             <runs/>
         </js-module>
     </platform>
+
+    <!-- firefoxos -->
+    <platform name="firefoxos">
+        <js-module src="src/firefoxos/BatteryProxy.js" name="Battery">
+            <runs />
+        </js-module>
+    </platform>
 </plugin>
