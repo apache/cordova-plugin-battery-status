@@ -40,3 +40,8 @@
 
 ### 0.2.7 (Feb 05, 2014)
 * Add Tizen plugin.
+
+### 0.2.8 (Apr 17, 2014)
+* CB-6465: Add license headers to Tizen code
+* CB-6460: Update license headers
+* Add NOTICE file
