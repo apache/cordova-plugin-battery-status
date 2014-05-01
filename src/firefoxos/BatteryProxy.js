@@ -19,7 +19,7 @@
  *
  */
 
-var mozBattery = cordova.require('cordova/modulemapper').getOriginalSymbol(window, 'navigator.battery');
+var mozBattery = cordova.require('cordova/modulemapper').getOriginalSymbol(window, 'navigator.battery') || navigator.mozBattery;
 
 var Battery = {
     start: function(successCB, failCB, args, env) {
