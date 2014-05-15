@@ -64,25 +64,28 @@ Battery.onHasSubscribersChange = function() {
  *
  * @param {Object} info            keys: level, isPlugged
  */
-Battery.prototype._status = function(info) {
+Battery.prototype._status = function (info) {
+
     if (info) {
         var me = battery;
-    var level = info.level;
-        if (me._level !== level || me._isPlugged !== info.isPlugged) {
-            // Fire batterystatus event
+        if (me._level !== info.level || me._isPlugged !== info.isPlugged) {
+            // Something changed. Fire batterystatus event
             cordova.fireWindowEvent("batterystatus", info);
 
-            // Fire low battery event
-            if (level === 20 || level === 5) {
-                if (level === 20) {
+            if (!info.isPlugged) { // do not fire low/critical if we are charging. issue: CB-4520
+                // note the following are NOT exact checks, as we want to catch a transition from 
+                // above the threshold to below. issue: CB-4519
+                if (me._level > 20 && info.level <= 20) {
+                    // Fire low battery event
                     cordova.fireWindowEvent("batterylow", info);
                 }
-                else {
+                else if (me._level > 5 && info.level <= 5) { 
+                    // Fire critical battery event
                     cordova.fireWindowEvent("batterycritical", info);
                 }
             }
         }
-        me._level = level;
+        me._level = info.level;
         me._isPlugged = info.isPlugged;
     }
 };
@@ -97,3 +100,4 @@ Battery.prototype._error = function(e) {
 var battery = new Battery();
 
 module.exports = battery;
+
