@@ -32,6 +32,9 @@ function handlers() {
          battery.channels.batterycritical.numHandlers;
 }
 
+var STATUS_CRITICAL = 5;
+var STATUS_LOW = 20;
+
 var Battery = function() {
     this._level = null;
     this._isPlugged = null;
@@ -67,26 +70,30 @@ Battery.onHasSubscribersChange = function() {
 Battery.prototype._status = function (info) {
 
     if (info) {
-        var me = battery;
-        if (me._level !== info.level || me._isPlugged !== info.isPlugged) {
+        if (battery._level !== info.level || battery._isPlugged !== info.isPlugged) {
+            
+            if(info.level == null && battery._level != null) {
+                return; // special case where callback is called because we stopped listening to the native side.
+            }
+            
             // Something changed. Fire batterystatus event
             cordova.fireWindowEvent("batterystatus", info);
 
             if (!info.isPlugged) { // do not fire low/critical if we are charging. issue: CB-4520
                 // note the following are NOT exact checks, as we want to catch a transition from 
                 // above the threshold to below. issue: CB-4519
-                if (me._level > 20 && info.level <= 20) {
-                    // Fire low battery event
-                    cordova.fireWindowEvent("batterylow", info);
-                }
-                else if (me._level > 5 && info.level <= 5) { 
+                if (battery._level > STATUS_CRITICAL && info.level <= STATUS_CRITICAL) { 
                     // Fire critical battery event
                     cordova.fireWindowEvent("batterycritical", info);
                 }
+                else if (battery._level > STATUS_LOW && info.level <= STATUS_LOW) {
+                    // Fire low battery event
+                    cordova.fireWindowEvent("batterylow", info);
+                }
             }
+            battery._level = info.level;
+            battery._isPlugged = info.isPlugged;
         }
-        me._level = info.level;
-        me._isPlugged = info.isPlugged;
     }
 };
 
