@@ -54,6 +54,7 @@ Les applications doivent généralement utiliser `window.addEventListener` pour 
 *   BlackBerry 10
 *   Windows Phone 7 et 8
 *   Paciarelli
+*   Firefox OS
 
 ### Notes au sujet de Windows Phone 7 et 8
 
@@ -88,6 +89,7 @@ Les applications devraient en général utiliser `window.addEventListener` pour 
 *   Android
 *   BlackBerry 10
 *   Paciarelli
+*   Firefox OS
 
 ### Exemple
 
@@ -118,6 +120,7 @@ Les applications devraient en général utiliser `window.addEventListener` pour 
 *   Android
 *   BlackBerry 10
 *   Paciarelli
+*   Firefox OS
 
 ### Exemple
 

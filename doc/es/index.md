@@ -54,6 +54,7 @@ Las aplicaciones normalmente deben utilizar `window.addEventListener` para conec
 *   BlackBerry 10
 *   Windows Phone 7 y 8
 *   Tizen
+*   Firefox OS
 
 ### Windows Phone 7 y 8 rarezas
 
@@ -88,6 +89,7 @@ Las aplicaciones normalmente deben utilizar `window.addEventListener` para conec
 *   Android
 *   BlackBerry 10
 *   Tizen
+*   Firefox OS
 
 ### Ejemplo
 
@@ -118,6 +120,7 @@ Las aplicaciones normalmente deben utilizar `window.addEventListener` para conec
 *   Android
 *   BlackBerry 10
 *   Tizen
+*   Firefox OS
 
 ### Ejemplo
 
