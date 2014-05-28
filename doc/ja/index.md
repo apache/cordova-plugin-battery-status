@@ -17,13 +17,13 @@
     under the License.
 -->
 
-# org.apache.cordova.battery-status
+# org.apache.cordova.battery ステータス
 
-This plugin provides an implementation of an old version of the [Battery Status Events API][1].
+このプラグインは、[バッテリ ステータス イベント API][1]の旧バージョンの実装を提供します.
 
  [1]: http://www.w3.org/TR/2011/WD-battery-status-20110915/
 
-It adds the following three `window` events:
+次の 3 つを追加します `window` イベント。
 
 *   batterystatus
 *   batterycritical
@@ -44,7 +44,7 @@ It adds the following three `window` events:
 
 *   **起こしたり**： デバイスが接続されてインチ*(ブール値)*かどうかを示すブール値
 
-Applications typically should use `window.addEventListener` to attach an event listener once the `deviceready` event fires. e.g.:
+通常アプリケーションに使用する必要があります `window.addEventListener` 一度のイベント リスナーをアタッチし、 `deviceready` イベント火災。 例。
 
 ### サポートされているプラットフォーム
 
@@ -54,6 +54,7 @@ Applications typically should use `window.addEventListener` to attach an event l
 *   ブラックベリー 10
 *   Windows Phone 7 と 8
 *   Tizen
+*   Firefox の OS
 
 ### Windows Phone 7 と 8 癖
 
@@ -88,6 +89,7 @@ Windows Phone 7 は、バッテリーのレベルを決定するネイティブ 
 *   アンドロイド
 *   ブラックベリー 10
 *   Tizen
+*   Firefox の OS
 
 ### 例
 
@@ -118,6 +120,7 @@ Windows Phone 7 は、バッテリーのレベルを決定するネイティブ 
 *   アンドロイド
 *   ブラックベリー 10
 *   Tizen
+*   Firefox の OS
 
 ### 例
 
