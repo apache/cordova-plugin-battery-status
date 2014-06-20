@@ -44,7 +44,7 @@ properties:
 - __isPlugged__: A boolean that indicates whether the device is plugged in. _(Boolean)_
 
 Applications typically should use `window.addEventListener` to
-attach an event listener once the `deviceready` event fires. e.g.:
+attach an event listener after the `deviceready` event fires.
 
 ### Supported Platforms
 
