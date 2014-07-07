@@ -44,7 +44,7 @@ Der Batterie-Status-Handler wird ein Objekt übergeben, das zwei Eigenschaften e
 
 *   **IsPlugged**: ein boolescher Wert, der angibt, ob das Gerät eingesteckt Zoll *(boolesch)*
 
-Anwendungen sollten in der Regel verwenden `window.addEventListener` Anfügen einen Ereignis-Listener einmal den `deviceready` Event Feuer. z.B.:
+Anwendungen sollten in der Regel verwenden `window.addEventListener` Anfügen einen Ereignis-Listener nach dem `deviceready` -Ereignis ausgelöst.
 
 ### Unterstützte Plattformen
 

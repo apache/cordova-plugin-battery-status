@@ -44,7 +44,7 @@
 
 *   **isPlugged**： 一個布林值，該值指示設備是否插*(布林值)*
 
-應用程式通常應使用 `window.addEventListener` 將一個事件攔截器附加一次 `deviceready` 事件火災。 例如：
+應用程式通常應使用 `window.addEventListener` 將附加一個事件攔截器後的 `deviceready` 事件觸發。
 
 ### 支援的平臺
 

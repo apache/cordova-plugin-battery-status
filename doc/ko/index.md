@@ -44,7 +44,7 @@
 
 *   **isPlugged**: 장치 연결된 인치 *(부울)* 인지 여부를 나타내는 부울 값
 
-일반적으로 응용 프로그램을 사용 해야 합니다 `window.addEventListener` 한번 이벤트 리스너를 부착 하는 `deviceready` 이벤트가 발생 합니다. 예를 들어:
+일반적으로 응용 프로그램을 사용 해야 합니다 `window.addEventListener` 후 이벤트 리스너를 연결 하는 `deviceready` 이벤트가 발생 합니다.
 
 ### 지원 되는 플랫폼
 

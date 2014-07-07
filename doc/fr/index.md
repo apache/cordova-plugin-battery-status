@@ -44,7 +44,7 @@ Le gestionnaire est appelé avec un objet contenant deux propriétés :
 
 *   **isPlugged** : un booléen indiquant si l'appareil est en cours de chargement ou non. *(Boolean)*
 
-Les applications doivent généralement utiliser `window.addEventListener` pour attacher un écouteur d'événements une fois le `deviceready` événement incendies. par exemple :
+Les applications doivent généralement utiliser `window.addEventListener` pour attacher un écouteur d'événements après le `deviceready` événement se déclenche.
 
 ### Plates-formes prises en charge
 

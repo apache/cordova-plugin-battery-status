@@ -17,7 +17,7 @@
     under the License.
 -->
 
-# org.apache.Cordova.Battery-estado
+# org.apache.cordova.battery-status
 
 Este plugin proporciona una implementación de una versión antigua de la [Batería estado eventos API][1].
 
@@ -44,7 +44,7 @@ El controlador de estado de batería se pasa un objeto que contiene dos propieda
 
 *   **isPlugged**: un valor booleano que indica si el dispositivo está conectado pulg *(Boolean)*
 
-Las aplicaciones normalmente deben utilizar `window.addEventListener` para conectar un detector de eventos una vez el `deviceready` evento incendios. por ejemplo:
+Las aplicaciones normalmente deben utilizar `window.addEventListener` para conectar un detector de eventos después de la `deviceready` evento incendios.
 
 ### Plataformas soportadas
 
