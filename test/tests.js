@@ -458,56 +458,7 @@ exports.defineManualTests = function (contentEl, createActionButton) {
                 cell : 1
             }
         }
-    ],
-    batteryActions = [{
-            id : "addBS",
-            content : "",
-            tag : "div",
-            position : {
-                row : 0,
-                cell : 0
-            }
-        }, {
-            id : "remBs",
-            content : "",
-            tag : "div",
-            position : {
-                row : 1,
-                cell : 0
-            }
-        }, {
-            id : "addBl",
-            content : "",
-            tag : "div",
-            position : {
-                row : 2,
-                cell : 0
-            }
-        }, {
-            id : "remBl",
-            content : "",
-            tag : "div",
-            position : {
-                row : 3,
-                cell : 0
-            }
-        }, {
-            id : "addBc",
-            content : "",
-            tag : "div",
-            position : {
-                row : 4,
-                cell : 0
-            }
-        }, {
-            id : "remBc",
-            content : "",
-            tag : "div",
-            position : {
-                row : 5,
-                cell : 0
-            }
-        }];
+    ];
     
     //Title audio results
     var div = document.createElement('h2');
@@ -522,9 +473,16 @@ exports.defineManualTests = function (contentEl, createActionButton) {
     div.appendChild(document.createTextNode('Actions'));
     div.setAttribute("align", "center");
     contentEl.appendChild(div);
-    
-    batteryActionsTable = generateTable('batteryContent', 6, 2, batteryActions);
-    contentEl.appendChild(batteryActionsTable);
+
+    contentEl.innerHTML += '<h3>Battery Status Tests</h3>' +
+        'Will update values for level and plugged when they change. If battery low and critical values are false, they will get updated in status box, but only once' +
+        '<div id="addBS"></div><div id="remBs"></div>' +
+        '<h3>Battery Low Tests</h3>' +
+        '</p> Will update value for battery low to true when battery is below 20%' +
+        '<div id="addBl"></div><div id="remBl"></div>' +
+        '<h3>Battery Critical Tests</h3>' +
+        '</p> Will update value for battery critical to true when battery is below 5%' +
+        '<div id="addBc"></div><div id="remBc"></div>';
 
     createActionButton('Add "batterystatus" listener', function () {
         addBattery();
