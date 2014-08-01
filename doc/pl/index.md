@@ -44,7 +44,7 @@ Obsługi stan baterii jest przekazywany obiekt, który zawiera dwie właściwoś
 
 *   **isPlugged**: boolean, która wskazuje, czy urządzenie jest podłączony *(Boolean)*
 
-Aplikacje zwykle należy użyć `window.addEventListener` Aby dołączyć słuchacza raz `deviceready` pożary zdarzenia. np.:
+Aplikacje zwykle należy użyć `window.addEventListener` Aby dołączyć słuchacza po `deviceready` pożary zdarzenia.
 
 ### Obsługiwane platformy
 
