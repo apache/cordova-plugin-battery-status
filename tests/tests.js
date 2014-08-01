@@ -515,7 +515,7 @@ exports.defineManualTests = function (contentEl, createActionButton) {
     div.setAttribute("align", "center");
     contentEl.appendChild(div);
 
-    batteryTable = generateTable('info', 5, 3, batteryElements);
+    var batteryTable = generateTable('info', 5, 3, batteryElements);
     contentEl.appendChild(batteryTable);
     
     div = document.createElement('h2');
@@ -523,7 +523,7 @@ exports.defineManualTests = function (contentEl, createActionButton) {
     div.setAttribute("align", "center");
     contentEl.appendChild(div);
     
-    batteryActionsTable = generateTable('batteryContent', 6, 2, batteryActions);
+    var batteryActionsTable = generateTable('batteryContent', 6, 2, batteryActions);
     contentEl.appendChild(batteryActionsTable);
 
     createActionButton('Add "batterystatus" listener', function () {
