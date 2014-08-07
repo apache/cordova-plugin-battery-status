@@ -378,19 +378,11 @@ exports.defineManualTests = function (contentEl, createActionButton) {
     // Battery Elements
     var batteryElements =
         [{
-            id : "tableName",
-            content : "Battery",
-            tag : "h2",
-            position : {
-                row : 0,
-                cell : 0
-            }
-        }, {
             id : "statusTag",
             content : "Status:",
             tag : "div",
             position : {
-                row : 1,
+                row : 0,
                 cell : 0
             }
         }, {
@@ -398,7 +390,7 @@ exports.defineManualTests = function (contentEl, createActionButton) {
             content : "",
             tag : "div",
             position : {
-                row : 1,
+                row : 0,
                 cell : 1
             }
         }, {
@@ -406,7 +398,7 @@ exports.defineManualTests = function (contentEl, createActionButton) {
             content : "Level:",
             tag : "div",
             position : {
-                row : 2,
+                row : 1,
                 cell : 0
             }
         }, {
@@ -414,7 +406,7 @@ exports.defineManualTests = function (contentEl, createActionButton) {
             content : "",
             tag : "div",
             position : {
-                row : 2,
+                row : 1,
                 cell : 1
             }
         }, {
@@ -422,7 +414,7 @@ exports.defineManualTests = function (contentEl, createActionButton) {
             content : "Plugged:",
             tag : "div",
             position : {
-                row : 3,
+                row : 2,
                 cell : 0
             }
         }, {
@@ -430,7 +422,7 @@ exports.defineManualTests = function (contentEl, createActionButton) {
             content : "",
             tag : "div",
             position : {
-                row : 3,
+                row : 2,
                 cell : 1
             }
         }, {
@@ -438,7 +430,7 @@ exports.defineManualTests = function (contentEl, createActionButton) {
             content : "Low:",
             tag : "div",
             position : {
-                row : 4,
+                row : 3,
                 cell : 0
             }
         }, {
@@ -446,7 +438,7 @@ exports.defineManualTests = function (contentEl, createActionButton) {
             content : "",
             tag : "div",
             position : {
-                row : 4,
+                row : 3,
                 cell : 1
             }
         }, {
@@ -454,7 +446,7 @@ exports.defineManualTests = function (contentEl, createActionButton) {
             content : "Critical:",
             tag : "div",
             position : {
-                row : 5,
+                row : 4,
                 cell : 0
             }
         }, {
@@ -462,23 +454,17 @@ exports.defineManualTests = function (contentEl, createActionButton) {
             content : "",
             tag : "div",
             position : {
-                row : 5,
+                row : 4,
                 cell : 1
             }
-        }, {
-            id : "actionTag",
-            content : "Actions",
-            tag : "h2",
-            position : {
-                row : 6,
-                cell : 0
-            }
-        }, {
+        }
+    ],
+    batteryActions = [{
             id : "addBS",
             content : "",
             tag : "div",
             position : {
-                row : 7,
+                row : 0,
                 cell : 0
             }
         }, {
@@ -486,15 +472,15 @@ exports.defineManualTests = function (contentEl, createActionButton) {
             content : "",
             tag : "div",
             position : {
-                row : 7,
-                cell : 1
+                row : 1,
+                cell : 0
             }
         }, {
             id : "addBl",
             content : "",
             tag : "div",
             position : {
-                row : 8,
+                row : 2,
                 cell : 0
             }
         }, {
@@ -502,15 +488,15 @@ exports.defineManualTests = function (contentEl, createActionButton) {
             content : "",
             tag : "div",
             position : {
-                row : 8,
-                cell : 1
+                row : 3,
+                cell : 0
             }
         }, {
             id : "addBc",
             content : "",
             tag : "div",
             position : {
-                row : 9,
+                row : 4,
                 cell : 0
             }
         }, {
@@ -518,14 +504,27 @@ exports.defineManualTests = function (contentEl, createActionButton) {
             content : "",
             tag : "div",
             position : {
-                row : 9,
-                cell : 1
+                row : 5,
+                cell : 0
             }
-        }
-    ];
+        }];
+    
+    //Title audio results
+    var div = document.createElement('h2');
+    div.appendChild(document.createTextNode('Battery Status'));
+    div.setAttribute("align", "center");
+    contentEl.appendChild(div);
 
-    batteryTable = generateTable('batteryContent', 10, 3, batteryElements);
+    batteryTable = generateTable('info', 5, 3, batteryElements);
     contentEl.appendChild(batteryTable);
+    
+    div = document.createElement('h2');
+    div.appendChild(document.createTextNode('Actions'));
+    div.setAttribute("align", "center");
+    contentEl.appendChild(div);
+    
+    batteryActionsTable = generateTable('batteryContent', 6, 2, batteryActions);
+    contentEl.appendChild(batteryActionsTable);
 
     createActionButton('Add "batterystatus" listener', function () {
         addBattery();
@@ -545,5 +544,4 @@ exports.defineManualTests = function (contentEl, createActionButton) {
     createActionButton('Remove "batterycritical" listener', function () {
         removeCritical();
     }, 'remBc');
-
 };
