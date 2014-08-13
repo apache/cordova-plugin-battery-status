@@ -47,12 +47,11 @@
 * Add NOTICE file
 
 ### 0.2.9 (Jun 05, 2014)
-* CB-6794 Add license for CONTRIBUTING.md
-* CB-6721 ignore null values if previous value was not null
 * CB-6721 Test for batterycritical change before batterylow change
-* Updated documentation. Added support for mozBattery.
-* CB-5611 firefoxos: battery-status plugin
+* CB-5611 firefoxos: battery-status plugin support added
 * CB-4519, CB-4520 low+critical weren't firing when level went from 21->19, and were when level went 19->20
 * CB-6491 add CONTRIBUTING.md
-* Lisa testing pulling in plugins for plugin: cordova-plugin-battery-status
-* Lisa testing pulling in plugins for plugin: cordova-plugin-battery-status
+
+### 0.2.10 (Aug 06, 2014)
+* CB-6957 Ported Battery-status manual & automated
+* CB-6127 Updated translations for docs
