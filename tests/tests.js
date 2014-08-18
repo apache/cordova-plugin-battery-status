@@ -466,7 +466,7 @@ exports.defineManualTests = function (contentEl, createActionButton) {
     div.setAttribute("align", "center");
     contentEl.appendChild(div);
 
-    batteryTable = generateTable('info', 5, 3, batteryElements);
+    var batteryTable = generateTable('info', 5, 3, batteryElements);
     contentEl.appendChild(batteryTable);
     
     div = document.createElement('h2');
