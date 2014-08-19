@@ -19,11 +19,11 @@
 
 # org.Apache.Cordova.Battery-status
 
-Dieses Plugin stellt eine Implementierung der eine alte Version des [Batterie-Status-Ereignisse-API][1].
+Dieses Plugin stellt eine Implementierung einer alten Version der [Batterie-Status-API][1] dar..
 
  [1]: http://www.w3.org/TR/2011/WD-battery-status-20110915/
 
-Es fügt die folgenden drei `window` Veranstaltungen:
+Es fügt die folgenden drei `window` Events hinzu:
 
 *   batterystatus
 *   batterycritical
@@ -36,15 +36,15 @@ Es fügt die folgenden drei `window` Veranstaltungen:
 
 ## batterystatus
 
-Dieses Ereignis wird ausgelöst, wenn der Prozentsatz der Akkuladung um mindestens 1 Prozent ändert, oder wenn das Gerät eingesteckt oder "Unplugged".
+Dieses Ereignis wird ausgelöst, wenn sich der Prozentsatz der Akkuladung um mindestens 1 Prozent ändert, oder wenn das Gerät aufgeladen oder vom Netz getrennt wird.
 
-Der Batterie-Status-Handler wird ein Objekt übergeben, das zwei Eigenschaften enthält:
+Dem Batterie-Status-Event-Handler wird ein Objekt übergeben, das zwei Eigenschaften enthält:
 
 *   **Ebene**: der Prozentsatz der Batterieladung (0-100). *(Anzahl)*
 
-*   **IsPlugged**: ein boolescher Wert, der angibt, ob das Gerät eingesteckt Zoll *(boolesch)*
+*   **IsPlugged**: ein boolescher Wert, der angibt, ob das Gerät eingesteckt ist *(boolesch)*
 
-Anwendungen sollten in der Regel verwenden `window.addEventListener` Anfügen einen Ereignis-Listener nach dem `deviceready` -Ereignis ausgelöst.
+Anwendungen sollten in der Regel `window.addEventListener` verwenden, um einen Event-Listener hinzuzufügen, nachdem das `deviceready` -Event ausgelöst wurde.
 
 ### Unterstützte Plattformen
 
@@ -56,9 +56,9 @@ Anwendungen sollten in der Regel verwenden `window.addEventListener` Anfügen ei
 *   Tizen
 *   Firefox OS
 
-### Windows Phone 7 und 8 Macken
+### Windows Phone 7 und 8 Eigenarten
 
-Windows Phone 7 bietet keine systemeigenen APIs um zu bestimmen, Batterie-Niveau, so dass die `level` -Eigenschaft ist nicht verfügbar. Der `isPlugged` -Parameter *wird* unterstützt.
+Windows Phone 7 bietet keine systemeigenen APIs um das Batterie-Niveau zu bestimmen, so dass die `level` -Eigenschaft ist nicht verfügbar. Der `isPlugged` -Parameter wird unterstützt.
 
 ### Beispiel
 
@@ -72,15 +72,15 @@ Windows Phone 7 bietet keine systemeigenen APIs um zu bestimmen, Batterie-Niveau
 
 ## batterycritical
 
-Das Ereignis wird ausgelöst, wenn der Prozentsatz der Batterieladung der kritischen Akku-Schwellenwert erreicht hat. Der Wert ist gerätespezifisch.
+Das Ereignis wird ausgelöst, wenn der Prozentsatz der Batterieladung den kritischen Akku-Schwellenwert erreicht hat. Der Wert ist gerätespezifisch.
 
-Die `batterycritical` Handler übergeben wird ein Objekt mit zwei Eigenschaften:
+Der `batterycritical` Handler übergibt ein Objekt mit zwei Eigenschaften:
 
 *   **Ebene**: der Prozentsatz der Batterieladung (0-100). *(Anzahl)*
 
-*   **IsPlugged**: ein boolescher Wert, der angibt, ob das Gerät eingesteckt Zoll *(boolesch)*
+*   **IsPlugged**: ein boolescher Wert, der angibt, ob das Gerät eingesteckt ist *(boolesch)*
 
-Anwendungen sollten in der Regel verwenden `window.addEventListener` einmal einen Ereignis-Listener hinzufügen das `deviceready` -Ereignis ausgelöst.
+Anwendungen sollten in der Regel `window.addEventListener` verwenden, um einen Event-Listener hinzuzufügen, nachdem das `deviceready` -Event ausgelöst wurde.
 
 ### Unterstützte Plattformen
 
@@ -103,15 +103,15 @@ Anwendungen sollten in der Regel verwenden `window.addEventListener` einmal eine
 
 ## batterylow
 
-Das Ereignis wird ausgelöst, wenn der Prozentsatz der Akkuladung, die Batterie-Schwelle, gerätespezifische Wert erreicht hat.
+Das Ereignis wird ausgelöst, wenn der Prozentsatz der Batterieladung den kritischen Akku-Schwellenwert erreicht hat. Der Wert ist gerätespezifisch.
 
-Die `batterylow` Handler übergeben wird ein Objekt mit zwei Eigenschaften:
+Der `batterylow` Handler übergibt ein Objekt mit zwei Eigenschaften:
 
 *   **Ebene**: der Prozentsatz der Batterieladung (0-100). *(Anzahl)*
 
-*   **IsPlugged**: ein boolescher Wert, der angibt, ob das Gerät eingesteckt Zoll *(boolesch)*
+*   **IsPlugged**: ein boolescher Wert, der angibt, ob das Gerät eingesteckt ist *(boolesch)*
 
-Anwendungen sollten in der Regel verwenden `window.addEventListener` einmal einen Ereignis-Listener hinzufügen das `deviceready` -Ereignis ausgelöst.
+Anwendungen sollten in der Regel `window.addEventListener` verwenden, um einen Event-Listener hinzuzufügen, nachdem das `deviceready` -Event ausgelöst wurde.
 
 ### Unterstützte Plattformen
 
