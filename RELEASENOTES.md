@@ -55,3 +55,10 @@
 ### 0.2.10 (Aug 06, 2014)
 * CB-6957 Ported Battery-status manual & automated
 * CB-6127 Updated translations for docs
+
+### 0.2.11 (Sep 17, 2014)
+* CB-7249 cordova-plugin-battery-status documentation translation: cordova-plugin-battery-status
+* CB-6724 re-add accidental removed of var keyword
+* CB-6957 renamed folder to tests + added nested plugin.xml
+* added documentation for manual tests
+* CB-6957 Style improvements on Manual tests
