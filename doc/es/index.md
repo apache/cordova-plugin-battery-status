@@ -34,13 +34,13 @@ Agrega los siguientes tres `window` eventos:
     cordova plugin add org.apache.cordova.battery-status
     
 
-## HomeScreen PlusPlus
+## batterystatus
 
-Este evento se desencadena cuando el porcentaje de carga de la batería cambia en menos de 1 por ciento, o si el dispositivo está conectado o desconectado.
+Este evento se desencadena cuando cambia el porcentaje de carga de la batería en menos de 1 por ciento, o si el aparato está enchufado o desenchufado.
 
-El controlador de estado de batería se pasa un objeto que contiene dos propiedades:
+El controlador del estado de batería se pasa un objeto que contiene dos propiedades:
 
-*   **nivel**: el porcentaje de carga de la batería (0-100). *(Número)*
+*   **level**: el porcentaje de carga de la batería (0-100). *(Número)*
 
 *   **isPlugged**: un valor booleano que indica si el dispositivo está conectado pulg *(Boolean)*
 
@@ -48,7 +48,7 @@ Las aplicaciones normalmente deben utilizar `window.addEventListener` para conec
 
 ### Plataformas soportadas
 
-*   Amazon fuego OS
+*   Amazon fire OS
 *   iOS
 *   Android
 *   BlackBerry 10
@@ -58,7 +58,7 @@ Las aplicaciones normalmente deben utilizar `window.addEventListener` para conec
 
 ### Windows Phone 7 y 8 rarezas
 
-Windows Phone 7 no proporciona API nativas para determinar el nivel de batería, así que el `level` propiedad no está disponible. El `isPlugged` parámetro *es* apoyado.
+Windows Phone 7 no proporciona una API nativa para determinar el nivel de batería, lo que `level` no está disponible. El `isPlugged` parámetro *es* apoyado.
 
 ### Ejemplo
 
@@ -72,19 +72,19 @@ Windows Phone 7 no proporciona API nativas para determinar el nivel de batería,
 
 ## batterycritical
 
-El evento se desencadena cuando el porcentaje de carga de la batería haya alcanzado el umbral de batería crítica. El valor es específica del dispositivo.
+El evento se desencadena cuando el porcentaje de carga de la batería ha alcanzado el umbral crítico de batería. El valor es específica del dispositivo.
 
-El `batterycritical` controlador se le pasa un objeto que contiene dos propiedades:
+El controlador `batterycritical` se pasa un objeto que contiene dos propiedades:
 
-*   **nivel**: el porcentaje de carga de la batería (0-100). *(Número)*
+*   **level**: el porcentaje de carga de la batería (0-100). *(Número)*
 
 *   **isPlugged**: un valor booleano que indica si el dispositivo está conectado pulg *(Boolean)*
 
-Las aplicaciones normalmente deben utilizar `window.addEventListener` para conectar un detector de eventos una vez el `deviceready` evento incendios.
+Las aplicaciones normalmente deben utilizar `window.addEventListener` para conectar un detector de eventos una vez que se desencadene el evento `deviceready`.
 
 ### Plataformas soportadas
 
-*   Amazon fuego OS
+*   Amazon fire OS
 *   iOS
 *   Android
 *   BlackBerry 10
@@ -103,19 +103,19 @@ Las aplicaciones normalmente deben utilizar `window.addEventListener` para conec
 
 ## batterylow
 
-El evento se desencadena cuando el porcentaje de carga de la batería haya alcanzado el umbral de batería baja, el valor específico del dispositivo.
+El evento se desencadena cuando el porcentaje de carga de la batería ha alcanzado el umbral de batería baja, el valor específico del dispositivo.
 
-El `batterylow` controlador se le pasa un objeto que contiene dos propiedades:
+El controlador de `batterylow` se pasa un objeto que contiene dos propiedades:
 
-*   **nivel**: el porcentaje de carga de la batería (0-100). *(Número)*
+*   **level**: el porcentaje de carga de la batería (0-100). *(Número)*
 
 *   **isPlugged**: un valor booleano que indica si el dispositivo está conectado pulg *(Boolean)*
 
-Las aplicaciones normalmente deben utilizar `window.addEventListener` para conectar un detector de eventos una vez el `deviceready` evento incendios.
+Las aplicaciones normalmente deben utilizar `window.addEventListener` para conectar un detector de eventos una vez que se desencadene el evento `deviceready`.
 
 ### Plataformas soportadas
 
-*   Amazon fuego OS
+*   Amazon fire OS
 *   iOS
 *   Android
 *   BlackBerry 10

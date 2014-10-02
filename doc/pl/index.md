@@ -29,7 +29,7 @@ To dodaje następujące trzy `window` zdarzenia:
 *   batterycritical
 *   batterylow
 
-## Instalacji
+## Instalacja
 
     cordova plugin add org.apache.cordova.battery-status
     
@@ -48,10 +48,10 @@ Aplikacje zwykle należy użyć `window.addEventListener` Aby dołączyć słuch
 
 ### Obsługiwane platformy
 
-*   Amazon ogień OS
+*   Amazon Fire OS
 *   iOS
 *   Android
-*   Jeżyna 10
+*   BlackBerry 10
 *   Windows Phone 7 i 8
 *   Tizen
 *   Firefox OS
@@ -84,10 +84,10 @@ Aplikacje zwykle należy użyć `window.addEventListener` Aby dołączyć słuch
 
 ### Obsługiwane platformy
 
-*   Amazon ogień OS
+*   Amazon Fire OS
 *   iOS
 *   Android
-*   Jeżyna 10
+*   BlackBerry 10
 *   Tizen
 *   Firefox OS
 
@@ -115,10 +115,10 @@ Aplikacje zwykle należy użyć `window.addEventListener` Aby dołączyć słuch
 
 ### Obsługiwane platformy
 
-*   Amazon ogień OS
+*   Amazon Fire OS
 *   iOS
 *   Android
-*   Jeżyna 10
+*   BlackBerry 10
 *   Tizen
 *   Firefox OS
 
