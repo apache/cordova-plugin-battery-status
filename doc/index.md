@@ -53,6 +53,7 @@ attach an event listener after the `deviceready` event fires.
 - Android
 - BlackBerry 10
 - Windows Phone 7 and 8
+- Windows Phone 8.1
 - Tizen
 - Firefox OS
 
@@ -61,6 +62,13 @@ attach an event listener after the `deviceready` event fires.
 Windows Phone 7 does not provide native APIs to determine battery
 level, so the `level` property is unavailable.  The `isPlugged`
 parameter _is_ supported.
+
+### Windows Phone 8.1 Quirks
+
+Windows Phone 8.1 does not support `isPlugged` parameter.
+The `level` parameter _is_ supported.
+The `batterystatus` event is fired when internal timer ticks 
+and only in case of a percentage value has changed.
 
 ### Example
 
