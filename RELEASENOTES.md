@@ -62,3 +62,8 @@
 * CB-6957 renamed folder to tests + added nested plugin.xml
 * added documentation for manual tests
 * CB-6957 Style improvements on Manual tests
+
+### 0.2.12 (Dec 02, 2014)
+* CB-7976 Android: Use webView's context rather than Activity's context for intent receiver
+* CB-7700 cordova-plugin-battery-status documentation translation: cordova-plugin-battery-status
+* CB-7571 Bump version of nested plugin to match parent plugin
