@@ -1,0 +1,39 @@
+{
+  "name": "cordova-plugin-battery-status",
+  "version": "0.2.13-dev",
+  "description": "Cordova Battery Plugin",
+  "cordova": {
+    "id": "org.apache.cordova.battery-status",
+    "platforms": [
+      "android",
+      "amazon-fireos",
+      "ubuntu",
+      "ios",
+      "blackberry10",
+      "wp7",
+      "wp8",
+      "tizen",
+      "firefoxos"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://git-wip-us.apache.org/repos/asf/cordova-plugin-battery-status.git"
+  },
+  "keywords": [
+    "cordova",
+    "battery",
+    "ecosystem:cordova",
+    "cordova-android",
+    "cordova-amazon-fireos",
+    "cordova-ubuntu",
+    "cordova-ios",
+    "cordova-blackberry10",
+    "cordova-wp7",
+    "cordova-wp8",
+    "cordova-tizen",
+    "cordova-firefoxos"
+  ],
+  "author": "Apache Software Foundation",
+  "license": "Apache 2.0"
+}
