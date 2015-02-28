@@ -19,4 +19,6 @@
 
 # org.apache.cordova.battery-status
 
+[![Build Status](https://travis-ci.org/apache/cordova-plugin-battery-status.svg)](https://travis-ci.org/apache/cordova-plugin-battery-status)
+
 Plugin documentation: [doc/index.md](doc/index.md)
