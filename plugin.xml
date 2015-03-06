@@ -101,6 +101,15 @@
         <source-file src="src/wp/Battery.cs" />
     </platform>
 
+    <!-- windows -->
+    <platform name="windows">	
+        <js-module src="src/windows/BatteryProxy.js" name="Battery">
+            <runs />
+        </js-module>
+        
+        <framework src="src/windows/BatteryStatus.winmd" custom="true"/>
+    </platform>
+
     <!-- tizen -->
     <platform name="tizen">
         <js-module src="src/tizen/BatteryStatusProxy.js" name="BatteryStatusProxy">
