@@ -17,8 +17,124 @@
          under the License.
 -->
 
-# org.apache.cordova.battery-status
+# cordova-plugin-battery-status
 
 [![Build Status](https://travis-ci.org/apache/cordova-plugin-battery-status.svg)](https://travis-ci.org/apache/cordova-plugin-battery-status)
 
-Plugin documentation: [doc/index.md](doc/index.md)
+This plugin provides an implementation of an old version of the [Battery Status Events API](http://www.w3.org/TR/2011/WD-battery-status-20110915/).
+
+It adds the following three `window` events:
+
+* batterystatus
+* batterycritical
+* batterylow
+
+## Installation
+
+    cordova plugin add cordova-plugin-battery-status
+
+## batterystatus
+
+This event fires when the percentage of battery charge changes by at
+least 1 percent, or if the device is plugged in or unplugged.
+
+The battery status handler is passed an object that contains two
+properties:
+
+- __level__: The percentage of battery charge (0-100). _(Number)_
+
+- __isPlugged__: A boolean that indicates whether the device is plugged in. _(Boolean)_
+
+Applications typically should use `window.addEventListener` to
+attach an event listener after the `deviceready` event fires.
+
+### Supported Platforms
+
+- Amazon Fire OS
+- iOS
+- Android
+- BlackBerry 10
+- Windows Phone 7 and 8
+- Tizen
+- Firefox OS
+
+### Windows Phone 7 and 8 Quirks
+
+Windows Phone 7 does not provide native APIs to determine battery
+level, so the `level` property is unavailable.  The `isPlugged`
+parameter _is_ supported.
+
+### Example
+
+    window.addEventListener("batterystatus", onBatteryStatus, false);
+
+    function onBatteryStatus(info) {
+        // Handle the online event
+        console.log("Level: " + info.level + " isPlugged: " + info.isPlugged);
+    }
+
+## batterycritical
+
+The event fires when the percentage of battery charge has reached the
+critical battery threshold. The value is device-specific.
+
+The `batterycritical` handler is passed an object that contains two
+properties:
+
+- __level__: The percentage of battery charge (0-100). _(Number)_
+
+- __isPlugged__: A boolean that indicates whether the device is plugged in. _(Boolean)_
+
+Applications typically should use `window.addEventListener` to attach
+an event listener once the `deviceready` event fires.
+
+### Supported Platforms
+
+- Amazon Fire OS
+- iOS
+- Android
+- BlackBerry 10
+- Tizen
+- Firefox OS
+
+### Example
+
+    window.addEventListener("batterycritical", onBatteryCritical, false);
+
+    function onBatteryCritical(info) {
+        // Handle the battery critical event
+        alert("Battery Level Critical " + info.level + "%\nRecharge Soon!");
+    }
+
+## batterylow
+
+The event fires when the percentage of battery charge has reached the
+low battery threshold, device-specific value.
+
+The `batterylow` handler is passed an object that contains two
+properties:
+
+- __level__: The percentage of battery charge (0-100). _(Number)_
+
+- __isPlugged__: A boolean that indicates whether the device is plugged in. _(Boolean)_
+
+Applications typically should use `window.addEventListener` to
+attach an event listener once the `deviceready` event fires.
+
+### Supported Platforms
+
+- Amazon Fire OS
+- iOS
+- Android
+- BlackBerry 10
+- Tizen
+- Firefox OS
+
+### Example
+
+    window.addEventListener("batterylow", onBatteryLow, false);
+
+    function onBatteryLow(info) {
+        // Handle the battery low event
+        alert("Battery Level Low " + info.level + "%");
+    }
