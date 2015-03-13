@@ -129,14 +129,10 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIDeviceBatteryLevelDidChangeNotification object:nil];
 }
 
-- (CDVPlugin*)initWithWebView:(UIWebView*)theWebView
+- (void)pluginInitialize
 {
-    self = (CDVBattery*)[super initWithWebView:theWebView];
-    if (self) {
-        self.state = UIDeviceBatteryStateUnknown;
-        self.level = -1.0;
-    }
-    return self;
+    self.state = UIDeviceBatteryStateUnknown;
+    self.level = -1.0;
 }
 
 - (void)dealloc
