@@ -58,6 +58,7 @@ attach an event listener after the `deviceready` event fires.
 - Windows (Windows Phone 8.1 only)
 - Tizen
 - Firefox OS
+- Browser
 
 ### Android and Amazon Fire OS Quirks
 
@@ -73,6 +74,10 @@ parameter _is_ supported.
 
 Windows Phone 8.1 does not support `isPlugged` parameter.
 The `level` parameter _is_ supported.
+
+### Browser Quirks
+
+Supported browsers are Chrome, Firefox and Opera. 
 
 ### Example
 
@@ -107,6 +112,7 @@ an event listener once the `deviceready` event fires.
 - Tizen
 - Firefox OS
 - Windows (Windows Phone 8.1 only)
+- Browser
 
 ### Windows Quirks
 
@@ -120,6 +126,10 @@ Windows Phone 8.1 will fire `batterycritical` event regardless of plugged state 
         // Handle the battery critical event
         alert("Battery Level Critical " + info.level + "%\nRecharge Soon!");
     }
+
+### Browser Quirks
+
+Supported browsers are Chrome, Firefox and Opera. 
 
 ## batterylow
 
@@ -145,6 +155,7 @@ attach an event listener once the `deviceready` event fires.
 - Tizen
 - Firefox OS
 - Windows (Windows Phone 8.1 only)
+- Browser
 
 ### Windows Quirks
 
@@ -158,3 +169,7 @@ Windows Phone 8.1 will fire `batterylow` event regardless of plugged state as it
         // Handle the battery low event
         alert("Battery Level Low " + info.level + "%");
     }
+
+### Browser Quirks
+
+Supported browsers are Chrome, Firefox and Opera. 
