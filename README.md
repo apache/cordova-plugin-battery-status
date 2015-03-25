@@ -61,7 +61,7 @@ attach an event listener after the `deviceready` event fires.
 
 ### Android and Amazon Fire OS Quirks
 
-- Warning: the Android + Fire OS implementations are greedy and prolonged use will drain the users battery. 
+- Warning: the Android + Fire OS implementations are greedy and prolonged use will drain the user's battery. 
 
 ### Windows Phone 7 and 8 Quirks
 
