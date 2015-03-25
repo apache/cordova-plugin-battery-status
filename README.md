@@ -59,6 +59,10 @@ attach an event listener after the `deviceready` event fires.
 - Tizen
 - Firefox OS
 
+### Android and Amazon Fire OS Quirks
+
+- Warning: the Android + Fire OS implementations are greedy and prolonged use will drain the users battery. 
+
 ### Windows Phone 7 and 8 Quirks
 
 Windows Phone 7 does not provide native APIs to determine battery
