@@ -17,7 +17,7 @@
     under the License.
 -->
 
-# org.apache.cordova.battery-status
+# cordova-plugin-battery-status
 
 Este plugin proporciona una implementación de una versión antigua de la [Batería estado eventos API][1].
 
@@ -31,7 +31,7 @@ Agrega los siguientes tres `window` eventos:
 
 ## Instalación
 
-    cordova plugin add org.apache.cordova.battery-status
+    cordova plugin add cordova-plugin-battery-status
     
 
 ## batterystatus

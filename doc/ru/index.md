@@ -17,7 +17,7 @@
     under the License.
 -->
 
-# org.apache.cordova.battery-status
+# cordova-plugin-battery-status
 
 Этот плагин предоставляет реализацию старой версии [API Событий Статуса Батареи][1].
 
@@ -31,7 +31,7 @@ API добавляет следующие три события для объе�
 
 ## Установка
 
-    cordova plugin add org.apache.cordova.battery-status
+    cordova plugin add cordova-plugin-battery-status
     
 
 ## batterystatus

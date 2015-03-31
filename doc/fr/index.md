@@ -31,7 +31,7 @@ Il ajoute les trois `window` des événements :
 
 ## Installation
 
-    cordova plugin add org.apache.cordova.battery-status
+    cordova plugin add cordova-plugin-battery-status
     
 
 ## batterystatus
