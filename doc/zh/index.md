@@ -17,7 +17,7 @@
     under the License.
 -->
 
-# org.apache.cordova.battery-地位
+# cordova-plugin-battery-地位
 
 這個外掛程式提供的舊版本的[電池狀態事件 API][1]實現的.
 

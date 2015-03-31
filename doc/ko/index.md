@@ -17,7 +17,7 @@
     under the License.
 -->
 
-# org.apache.cordova.battery 상태
+# cordova-plugin-battery 상태
 
 이 플러그인에서는 [배터리 상태 이벤트 API][1] 의 이전 버전의 구현을.
 

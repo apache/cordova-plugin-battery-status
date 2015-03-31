@@ -17,7 +17,7 @@
     under the License.
 -->
 
-# org.apache.cordova.battery ステータス
+# cordova-plugin-battery ステータス
 
 このプラグインは、[バッテリ ステータス イベント API][1]の旧バージョンの実装を提供します.
 
