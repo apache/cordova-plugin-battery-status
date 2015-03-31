@@ -3,7 +3,7 @@
   "version": "0.2.13-dev",
   "description": "Cordova Battery Plugin",
   "cordova": {
-    "id": "org.apache.cordova.battery-status",
+    "id": "cordova-plugin-battery-status",
     "platforms": [
       "android",
       "amazon-fireos",
