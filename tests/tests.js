@@ -20,278 +20,322 @@
  */
 
 exports.defineAutoTests = function () {
+    var isWindowsStore = (cordova.platformId == "windows8") || (cordova.platformId == "windows" && !WinJS.Utilities.isPhone),
+        onEvent;
 
     describe('Battery (navigator.battery)', function () {
 
         it("battery.spec.1 should exist", function () {
+            if (isWindowsStore) {
+                pending('Battery status is not supported on windows store');
+            }
+
             expect(navigator.battery).toBeDefined();
         });
     });
 
     describe('Battery Events', function () {
-        // BatteryStatus
-        beforeEach(function () {
-            // Custom Matcher
-            jasmine.Expectation.addMatchers({
-                toBatteryStatus : function () {
-                    return {
-                        compare : function (status, message) {
-                            var pass = status;
-                            return {
-                                pass : pass,
-                                message : message
-                            };
-                        }
-                    };
+
+        describe("batterystatus", function () {
+
+            afterEach(function () {
+                if (!isWindowsStore) {
+                    try {
+                        window.removeEventListener("batterystatus", onEvent, false);
+                    }
+                    catch (e) {
+                        console.err('Error removing batterystatus event listener: ' + e)
+                    }
                 }
             });
+
+            it("battery.spec.2 should fire batterystatus events", function (done) {
+                if (isWindowsStore) {
+                    pending('Battery status is not supported on windows store');
+                }
+
+                onEvent = jasmine.createSpy("BatteryStatus");
+
+                // batterystatus -> 30
+                window.addEventListener("batterystatus", onEvent, false);
+
+                navigator.battery._status({
+                    level: 30,
+                    isPlugged: false
+                });
+
+                setTimeout(function () {
+                    expect(onEvent).toHaveBeenCalled();
+                    done();
+                }, 100);
+
+            });
         });
 
-        it("battery.spec.2 should fire batterystatus events", function (done) {
-            var onEvent = function () {
-                window.removeEventListener("batterystatus", onEvent, false);
-                onEventFlag = true;
-            },
-            onEventFlag = false;
-            // batterystatus -> 30
-            window.addEventListener("batterystatus", onEvent, false);
+        describe("batterylow", function () {
 
-            navigator.battery._status({
-                level : 30,
-                isPlugged : false
+            afterEach(function () {
+                if (!isWindowsStore) {
+                    try {
+                        window.removeEventListener("batterylow", onEvent, false);
+                    }
+                    catch (e) {
+                        console.err('Error removing batterylow event listener: ' + e)
+                    }
+                }
             });
-            setTimeout(function () {
-                expect(onEventFlag).toBatteryStatus('Listener: "batterystatus" event, it did not fire');
-                done();
-            }, 100);
 
+            it("battery.spec.3 should fire batterylow event (30 -> 20)", function (done) {
+                if (isWindowsStore) {
+                    pending('Battery status is not supported on windows store');
+                }
+
+                onEvent = jasmine.createSpy("BatteryLow");
+
+                // batterylow 30 -> 20
+                window.addEventListener("batterylow", onEvent, false);
+
+                navigator.battery._status({
+                    level : 30,
+                    isPlugged : false
+                });
+
+                navigator.battery._status({
+                    level : 20,
+                    isPlugged : false
+                });
+
+                setTimeout(function () {
+                    expect(onEvent).toHaveBeenCalled();
+                    done();
+                }, 100);
+
+            });
+
+            it("battery.spec.3.1 should fire batterylow event (30 -> 19)", function (done) {
+                if (isWindowsStore) {
+                    pending('Battery status is not supported on windows store');
+                }
+
+                onEvent = jasmine.createSpy("BatteryLow");
+
+                // batterylow 30 -> 19
+                window.addEventListener("batterylow", onEvent, false);
+
+                navigator.battery._status({
+                    level : 30,
+                    isPlugged : false
+                });
+
+                navigator.battery._status({
+                    level : 19,
+                    isPlugged : false
+                });
+
+                setTimeout(function () {
+                    expect(onEvent).toHaveBeenCalled();
+                    done();
+                }, 100);
+            });
+
+            it("battery.spec.3.2 should not fire batterylow event (5 -> 20)", function (done) {
+                if (isWindowsStore) {
+                    pending('Battery status is not supported on windows store');
+                }
+
+                onEvent = jasmine.createSpy("BatteryLow");
+
+                // batterylow should not fire when level increases (5->20) ( CB-4519 )
+                window.addEventListener("batterylow", onEvent, false);
+
+                navigator.battery._status({
+                    level : 5,
+                    isPlugged : false
+                });
+
+                navigator.battery._status({
+                    level: 20,
+                    isPlugged: false
+                });
+
+                setTimeout(function () {
+                    expect(onEvent).not.toHaveBeenCalled();
+                    done();
+                }, 100);
+            });
+
+            it("battery.spec.3.3 batterylow event(21 -> 20) should not fire if charging", function (done) {
+                if (isWindowsStore) {
+                    pending('Battery status is not supported on windows store');
+                }
+
+                onEvent = jasmine.createSpy("BatteryLow");
+
+                // batterylow should NOT fire if we are charging   ( CB-4520 )
+                window.addEventListener("batterylow", onEvent, false);
+
+                navigator.battery._status({
+                    level : 21,
+                    isPlugged : true
+                });
+
+                navigator.battery._status({
+                    level : 20,
+                    isPlugged : true
+                });
+
+                setTimeout(function () {
+                    expect(onEvent).not.toHaveBeenCalled();
+                    done();
+                }, 100);
+            });
         });
 
-        it("battery.spec.3 should fire batterylow event (30 -> 20)", function (done) {
+        describe("batterycritical", function () {
 
-            var onEvent = function () {
-                window.removeEventListener("batterylow", onEvent, false);
-                onEventFlag = true;
-            },
-            onEventFlag = false;
-            // batterylow 30 -> 20
-            navigator.battery._status({
-                level : 30,
-                isPlugged : false
-            });
-            window.addEventListener("batterylow", onEvent, false);
-            navigator.battery._status({
-                level : 20,
-                isPlugged : false
+            afterEach(function () {
+                if (!isWindowsStore) {
+                    try {
+                        window.removeEventListener("batterycritical", onEvent, false);
+                    }
+                    catch (e) {
+                        console.err('Error removing batterycritical event listener: ' + e)
+                    }
+                }
             });
 
-            setTimeout(function () {
-                expect(onEventFlag).toBatteryStatus('Listener: "batterylow" event (30 -> 20), it did not fire');
-                done();
-            }, 100);
+            it("battery.spec.4 should fire batterycritical event (19 -> 5)", function (done) {
+                if (isWindowsStore) {
+                    pending('Battery status is not supported on windows store');
+                }
 
+                onEvent = jasmine.createSpy("BatteryCritical");
+
+                // batterycritical 19->5
+                window.addEventListener("batterycritical", onEvent, false);
+
+                navigator.battery._status({
+                    level: 19,
+                    isPlugged: false
+                });
+
+                navigator.battery._status({
+                    level: 5,
+                    isPlugged: false
+                });
+
+                setTimeout(function () {
+                    expect(onEvent).toHaveBeenCalled();
+                    done();
+                }, 100);
+
+            });
+
+            it("battery.spec.4.1 should fire batterycritical event (19 -> 4)", function (done) {
+                if (isWindowsStore) {
+                    pending('Battery status is not supported on windows store');
+                }
+
+                onEvent = jasmine.createSpy("BatteryCritical");
+
+                // batterycritical 19->4
+                window.addEventListener("batterycritical", onEvent, false);
+
+                navigator.battery._status({
+                    level: 19,
+                    isPlugged: false
+                });
+
+                navigator.battery._status({
+                    level: 4,
+                    isPlugged: false
+                });
+
+                setTimeout(function () {
+                    expect(onEvent).toHaveBeenCalled();
+                    done();
+                }, 100);
+
+            });
+
+            it("battery.spec.4.2 should fire batterycritical event (100 -> 4) when decreases", function (done) {
+                if (isWindowsStore) {
+                    pending('Battery status is not supported on windows store');
+                }
+
+                onEvent = jasmine.createSpy("BatteryCritical");
+
+                // setup: batterycritical should fire when level decreases (100->4) ( CB-4519 )
+                window.addEventListener("batterycritical", onEvent, false);
+
+                navigator.battery._status({
+                    level: 100,
+                    isPlugged: false
+                });
+
+                navigator.battery._status({
+                    level: 4,
+                    isPlugged: false
+                });
+
+                setTimeout(function () {
+                    expect(onEvent).toHaveBeenCalled();
+                    done();
+                }, 100);
+            });
+
+            it("battery.spec.4.3 should not fire batterycritical event (4 -> 5) when increasing", function (done) {
+                if (isWindowsStore) {
+                    pending('Battery status is not supported on windows store');
+                }
+
+                onEvent = jasmine.createSpy("BatteryCritical");
+
+                window.addEventListener("batterycritical", onEvent, false);
+
+                // batterycritical should not fire when level increases (4->5)( CB-4519 )
+                navigator.battery._status({
+                    level: 4,
+                    isPlugged: false
+                });
+
+                navigator.battery._status({
+                    level: 5,
+                    isPlugged: false
+                });
+
+                setTimeout(function () {
+                    expect(onEvent.calls.count()).toBeLessThan(2);
+                    done();
+                }, 100);
+            });
+
+            it("battery.spec.4.4 should not fire batterycritical event (6 -> 5) if charging", function (done) {
+                if (isWindowsStore) {
+                    pending('Battery status is not supported on windows store');
+                }
+
+                onEvent = jasmine.createSpy("BatteryCritical");
+
+                window.addEventListener("batterycritical", onEvent, false);
+
+                // batterycritical should NOT fire if we are charging   ( CB-4520 )
+                navigator.battery._status({
+                    level: 6,
+                    isPlugged: true
+                });
+
+                navigator.battery._status({
+                    level: 5,
+                    isPlugged: true
+                });
+
+                setTimeout(function () {
+                    expect(onEvent).not.toHaveBeenCalled();
+                    done();
+                }, 100);
+            });
         });
-
-        it("battery.spec.3.1 should fire batterylow event (30 -> 19)", function (done) {
-
-            var onEvent = function () {
-                window.removeEventListener("batterylow", onEvent, false);
-                onEventFlag = true;
-            },
-            onEventFlag = false;
-
-            // batterylow 30 -> 19
-
-            navigator.battery._status({
-                level : 30,
-                isPlugged : false
-            });
-            window.addEventListener("batterylow", onEvent, false);
-            navigator.battery._status({
-                level : 19,
-                isPlugged : false
-            });
-
-            setTimeout(function () {
-                expect(onEventFlag).toBatteryStatus('Listener: "batterylow" event (30 -> 19), it did not fire');
-                done();
-            }, 100);
-        });
-
-        it("battery.spec.3.2 should not fire batterylow event (5 -> 20)", function (done) {
-
-            var onEvent = function () {
-                window.removeEventListener("batterylow", onEvent, false);
-                onEventFlag = false;
-            },
-            onEventFlag = true;
-
-            // batterylow should not fire when level increases (5->20) ( CB-4519 )
-
-            navigator.battery._status({
-                level : 5,
-                isPlugged : false
-            });
-            window.addEventListener("batterylow", onEvent, false);
-            navigator.battery._status({
-                level : 20,
-                isPlugged : false
-            });
-
-            setTimeout(function () {
-                expect(onEventFlag).toBatteryStatus('Listener: "batterylow" event (5 -> 20), should not be fired');
-                done();
-            }, 100);
-        });
-
-        it("battery.spec.3.3 batterylow event(21 -> 20) should not fire if charging", function (done) {
-
-            var onEvent = function () {
-                window.removeEventListener("batterylow", onEvent, false);
-                onEventFlag = false;
-            },
-            onEventFlag = true;
-
-            // batterylow should NOT fire if we are charging   ( CB-4520 )
-
-            navigator.battery._status({
-                level : 21,
-                isPlugged : true
-            });
-            window.addEventListener("batterylow", onEvent, false);
-            navigator.battery._status({
-                level : 20,
-                isPlugged : true
-            });
-
-            setTimeout(function () {
-                expect(onEventFlag).toBatteryStatus('Listener: "batterylow" event (21 -> 20), should not be fired if charging');
-                done();
-            }, 100);
-        });
-
-        it("battery.spec.4 should fire batterycritical events (19 -> 5)", function (done) {
-            var onEvent = function () {
-                window.removeEventListener("batterycritical", onEvent, false);
-                onEventFlag = true;
-            },
-            onEventFlag = false;
-
-            // batterycritical 19->5
-            navigator.battery._status({
-                level : 19,
-                isPlugged : false
-            });
-            window.addEventListener("batterycritical", onEvent, false);
-            navigator.battery._status({
-                level : 5,
-                isPlugged : false
-            });
-
-            setTimeout(function () {
-                expect(onEventFlag).toBatteryStatus('Listener: "batterycritical" event (19 -> 5), it did not fire');
-                done();
-            }, 100);
-
-        });
-
-        it("battery.spec.4.1 should fire batterycritical (19 -> 4) events", function (done) {
-            var onEvent = function () {
-                window.removeEventListener("batterycritical", onEvent, false);
-                onEventFlag = true;
-            },
-            onEventFlag = false;
-
-            // batterycritical 19->4
-            navigator.battery._status({
-                level : 19,
-                isPlugged : false
-            });
-            window.addEventListener("batterycritical", onEvent, false);
-            navigator.battery._status({
-                level : 4,
-                isPlugged : false
-            });
-
-            setTimeout(function () {
-                expect(onEventFlag).toBatteryStatus('Listener: "batterycritical" event (19 -> 4), it did not fire');
-                done();
-            }, 100);
-
-        });
-
-        it("battery.spec.4.2 should fire batterycritical event (100 -> 4) when decreases", function (done) {
-            var onEvent = function () {
-                window.removeEventListener("batterycritical", onEvent, false);
-                onEventFlag = true;
-            },
-            onEventFlag = false;
-
-            // setup: batterycritical should fire when level decreases (100->4) ( CB-4519 )
-            navigator.battery._status({
-                level : 100,
-                isPlugged : false
-            });
-            window.addEventListener("batterycritical", onEvent, false);
-            navigator.battery._status({
-                level : 4,
-                isPlugged : false
-            });
-
-            setTimeout(function () {
-                expect(onEventFlag).toBatteryStatus('Listener: "batterycritical" event (100 -> 4), it did not fire');
-                done();
-            }, 100);
-        });
-
-        it("battery.spec.4.3 should not fire batterycritical event (4 -> 5) when increasing", function (done) {
-            var onEvent = function () {
-                window.removeEventListener("batterycritical", onEvent, false);
-                onEventFlag = false;
-            },
-            onEventFlag = true;
-
-            // batterycritical should not fire when level increases (4->5)( CB-4519 )
-            navigator.battery._status({
-                level : 4,
-                isPlugged : false
-            });
-            window.addEventListener("batterycritical", onEvent, false);
-            navigator.battery._status({
-                level : 5,
-                isPlugged : false
-            });
-
-            setTimeout(function () {
-                expect(onEventFlag).toBatteryStatus('Listener: "batterycritical" event (4 -> 5), should not be fired');
-                done();
-            }, 100);
-        });
-
-        it("battery.spec.4.4 should not fire batterycritical event (6 -> 5) if charging", function (done) {
-            var onEvent = function () {
-                window.removeEventListener("batterycritical", onEvent, false);
-                onEventFlag = false;
-            },
-            onEventFlag = true;
-
-            // batterycritical should NOT fire if we are charging   ( CB-4520 )
-            navigator.battery._status({
-                level : 6,
-                isPlugged : true
-            });
-            window.addEventListener("batterycritical", onEvent, false);
-            navigator.battery._status({
-                level : 5,
-                isPlugged : true
-            });
-
-            setTimeout(function () {
-                expect(onEventFlag).toBatteryStatus('Listener: "batterycritical" event (6 -> 5), should not be fired if charging');
-                done();
-            }, 100);
-        });
-
     });
 };
 
@@ -344,7 +388,7 @@ exports.defineManualTests = function (contentEl, createActionButton) {
     function removeCritical() {
         window.removeEventListener("batterycritical", batteryCritical, false);
     }
-    
+
     //Generate Dynamic Table
     function generateTable(tableId, rows, cells, elements) {
         var table = document.createElement('table');
@@ -459,7 +503,7 @@ exports.defineManualTests = function (contentEl, createActionButton) {
             }
         }
     ];
-    
+
     //Title audio results
     var div = document.createElement('h2');
     div.appendChild(document.createTextNode('Battery Status'));
@@ -468,7 +512,7 @@ exports.defineManualTests = function (contentEl, createActionButton) {
 
     var batteryTable = generateTable('info', 5, 3, batteryElements);
     contentEl.appendChild(batteryTable);
-    
+
     div = document.createElement('h2');
     div.appendChild(document.createTextNode('Actions'));
     div.setAttribute("align", "center");
