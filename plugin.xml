@@ -107,7 +107,7 @@
             <runs />
         </js-module>
         
-        <framework src="src/windows/BatteryStatus.winmd" custom="true"/>
+        <framework src="src/windows/BatteryStatus.winmd" custom="true" target="phone"/>
     </platform>
 
     <!-- tizen -->

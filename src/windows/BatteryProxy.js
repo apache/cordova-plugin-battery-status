@@ -34,13 +34,15 @@ function handleResponse(successCb, errorCb, jsonResponse) {
 
 var Battery = {
     start: function (win, fail, args, env) {
+        // Battery API supported on Phone devices only so in case of
+        // desktop/tablet the only one choice is to fail with appropriate message.
+        if (!WinJS.Utilities.isPhone) {
+            fail("The operation is not supported on Windows Desktop devices.");
+            return;
+        }
+
         stopped = false;
         try {
-            if (!WinJS.Utilities.isPhone) {
-                fail("The operation is not supported by this platform.");
-                return;
-            }
-
             function getBatteryStatus(success, error) {
                 handleResponse(success, error, BatteryStatus.BatteryStatus.start());
             }
@@ -68,6 +70,12 @@ var Battery = {
     },
 
     stop: function () {
+        // Battery API supported on Phone devices only so in case of
+        // desktop/tablet device we don't need for any actions.
+        if (!WinJS.Utilities.isPhone) {
+            return;
+        }
+
         stopped = true;
         BatteryStatus.BatteryStatus.stop();
     }
