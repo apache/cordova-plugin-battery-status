@@ -67,3 +67,20 @@
 * CB-7976 Android: Use webView's context rather than Activity's context for intent receiver
 * CB-7700 cordova-plugin-battery-status documentation translation: cordova-plugin-battery-status
 * CB-7571 Bump version of nested plugin to match parent plugin
+
+### 1.0.0 (Apr 15, 2015)
+* CB-8746 gave plugin major version bump
+* CB-8808 Fixed tests to pass on Windows Phone 8.1
+* CB-8831 Adds extra check for available API on Windows
+* CB-8653 properly updated translated docs to use new id
+* CB-8683 changed plugin-id to pacakge-name
+* CB-8653 updated translated docs to use new id
+* Use TRAVIS_BUILD_DIR, install paramedic by npm
+* Doc correction, Use the apostrophe to show possession
+* Fix travis+paramedic pathing issue
+* add Android+FireOS warning to tell devs that prolonged use will drain the battery.
+* CB-7971 Add cordova-plugin-battery-status support for Windows Phone 8.1
+* CB-8659: ios: 4.0.x Compatibility: Remove use of initWithWebView method
+* added apache/travis badge - will not show until INFRA updates the github integration
+* add travis.yml for CI with paramedic
+* CB-8538 Added package.json file
