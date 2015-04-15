@@ -1,6 +1,6 @@
 {
   "name": "cordova-plugin-battery-status",
-  "version": "1.0.0-dev",
+  "version": "1.0.0",
   "description": "Cordova Battery Plugin",
   "cordova": {
     "id": "cordova-plugin-battery-status",
