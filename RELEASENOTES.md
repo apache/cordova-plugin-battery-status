@@ -84,3 +84,9 @@
 * added apache/travis badge - will not show until INFRA updates the github integration
 * add travis.yml for CI with paramedic
 * CB-8538 Added package.json file
+
+### 1.1.0 (Jun 17, 2015)
+* added missing license headers
+* CB-7953 Add cordova-plugin-battery-status support for browser platform
+* CB-9128 cordova-plugin-battery-status documentation translation: cordova-plugin-battery-status
+* attempt to fix npm issue
