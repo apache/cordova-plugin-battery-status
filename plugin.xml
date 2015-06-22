@@ -31,6 +31,10 @@
     <js-module src="www/battery.js" name="battery">
         <clobbers target="navigator.battery" />
     </js-module>
+
+    <js-module src="www/getBattery.js" name="getBattery">
+        <clobbers target="navigator.getBattery" />
+    </js-module>
     
     <!-- android -->
     <platform name="android">

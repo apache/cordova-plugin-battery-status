@@ -46,8 +46,10 @@ var BatteryManager = function() {
     //- positive Infinity, if the battery is charging
     //- positive Infinity if the battery is discharging,
     this._dischargingTime = "positive Infinity";
-};
 
+    // Create new event handlers on the object  (chanel instance);
+    this.onchargingchange = cordova.addWindowEventHandler("chargingchange");
+};
 
 var batteryManager = new BatteryManager();
 //Readonly properties
@@ -64,6 +66,62 @@ Object.defineProperty(batteryManager, "level", {
     get : function () { return batteryManager._level; }
 });
 
+/**
+ * Callback for battery status
+ *
+ * @param {Object} info            keys: level, isPlugged , charging
+ */
+BatteryManager.prototype._status = function (info) {
+    if (info) {
+        if (batteryManager._level !== info.level || batteryManager._isPlugged !== info.isPlugged) {
+
+            if (!info.hasOwnProperty('charging')) {
+                info.charging = info.isPlugged;
+            }
+
+            if (info.level === null && batteryManager._level !== null) {
+                return; // special case where callback is called because we stopped listening to the native side.
+            }
+
+            if (batteryManager._charging !== info.charging) {
+                batteryManager._charging = info.charging;
+                cordova.fireWindowEvent("chargingchange", info);
+            }
+
+            batteryManager._level = info.level;
+            batteryManager._isPlugged = info.isPlugged;
+        }
+    }
+};
+
+/**
+ * Error callback for battery start
+ */
+BatteryManager.prototype._error = function(e) {
+    console.log("Error initializing Battery: " + e);
+};
+
+/**
+* Keep track of how many handlers we have so we can start and stop 
+* the native battery listener appropriately (and hopefully save on battery life!).
+*/
+function handlers() {
+    return batteryManager.onchargingchange.numHandlers;
+}
+
+/**
+* Event handlers for when callbacks get registered for the battery.
+* Function that is called when the first listener is subscribed, or when
+* the last listener is unsubscribed.
+*/
+BatteryManager.onHasSubscribersChange = function () {
+    // If we just registered the first handler, make sure native listener is started.
+    if (this.numHandlers === 1 && handlers() === 1) {
+        exec(batteryManager._status, batteryManager._error, "Battery", "start", []);
+    } else if (handlers() === 0) {
+        exec(null, null, "Battery", "stop", []);
+    }
+};
 
 function getBattery() {
     return new Promise(
