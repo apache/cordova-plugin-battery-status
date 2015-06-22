@@ -47,8 +47,13 @@ var BatteryManager = function() {
     //- positive Infinity if the battery is discharging,
     this._dischargingTime = "positive Infinity";
 
-    // Create new event handlers on the object  (chanel instance);
+    // Create new event handlers on the object (chanel instance);
     this.onchargingchange = cordova.addWindowEventHandler("chargingchange");
+    this.onchargingtimechange = cordova.addWindowEventHandler("chargingtimechange");
+
+    //set the onHasSubscribersChange to call native bridge when events are subsribed
+    this.onchargingchange.onHasSubscribersChange = BatteryManager.onHasSubscribersChange;
+    this.onchargingtimechange.onHasSubscribersChange = BatteryManager.onHasSubscribersChange;
 };
 
 var batteryManager = new BatteryManager();
@@ -69,25 +74,31 @@ Object.defineProperty(batteryManager, "level", {
 /**
  * Callback for battery status
  *
- * @param {Object} info            keys: level, isPlugged , charging
+ * @param {Object} info            keys: level, isPlugged , charging, chargingtimechange
  */
 BatteryManager.prototype._status = function (info) {
     if (info) {
+
+        if (!info.hasOwnProperty('charging')) {
+            info.charging = info.isPlugged;
+        }
+
+        if (info.level === null && batteryManager._level !== null) {
+            return; // special case where callback is called because we stopped listening to the native side.
+        }
+
+        if (batteryManager._charging !== info.charging) {
+            batteryManager._charging = info.charging;
+            cordova.fireWindowEvent("chargingchange", info);
+        }
+
+        //not all device provide chargingTime
+        if (info.hasOwnProperty('chargingTime') && (batteryManager._chargingTime !== info.chargingTime)) {
+            batteryManager._chargingTime = info.chargingTime;
+            batteryManager.dispatchEvent("chargingtimechange");
+        }
+
         if (batteryManager._level !== info.level || batteryManager._isPlugged !== info.isPlugged) {
-
-            if (!info.hasOwnProperty('charging')) {
-                info.charging = info.isPlugged;
-            }
-
-            if (info.level === null && batteryManager._level !== null) {
-                return; // special case where callback is called because we stopped listening to the native side.
-            }
-
-            if (batteryManager._charging !== info.charging) {
-                batteryManager._charging = info.charging;
-                cordova.fireWindowEvent("chargingchange", info);
-            }
-
             batteryManager._level = info.level;
             batteryManager._isPlugged = info.isPlugged;
         }
@@ -106,8 +117,9 @@ BatteryManager.prototype._error = function(e) {
 * the native battery listener appropriately (and hopefully save on battery life!).
 */
 function handlers() {
-    return batteryManager.onchargingchange.numHandlers;
-}
+    return batteryManager.onchargingchange.numHandlers +
+           batteryManager.onchargingtimechange.numHandlers;
+};
 
 /**
 * Event handlers for when callbacks get registered for the battery.
