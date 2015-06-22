@@ -45,29 +45,34 @@ var BatteryManager = function() {
     //_dischargingTime value : 
     //- positive Infinity, if the battery is charging
     //- positive Infinity if the battery is discharging,
-    this._dischargingTime = "positive Infinity";
+    this._dischargingTime = 'positive Infinity';
 
     // Create new event handlers on the object (chanel instance);
-    this.onchargingchange = cordova.addWindowEventHandler("chargingchange");
-    this.onchargingtimechange = cordova.addWindowEventHandler("chargingtimechange");
+    this.onchargingchange = cordova.addWindowEventHandler('chargingchange');
+    this.onchargingtimechange = cordova.addWindowEventHandler('chargingtimechange');
+    this.ondischargingtimechange = cordova.addWindowEventHandler('dischargingtimechange');
+    this.onlevelchange = cordova.addWindowEventHandler('levelchange');
 
     //set the onHasSubscribersChange to call native bridge when events are subsribed
     this.onchargingchange.onHasSubscribersChange = BatteryManager.onHasSubscribersChange;
     this.onchargingtimechange.onHasSubscribersChange = BatteryManager.onHasSubscribersChange;
+    this.ondischargingtimechange.onHasSubscribersChange = BatteryManager.onHasSubscribersChange;
+    this.onlevelchange.onHasSubscribersChange = BatteryManager.onHasSubscribersChange;
 };
+
 
 var batteryManager = new BatteryManager();
 //Readonly properties
-Object.defineProperty(batteryManager, "charging", {
+Object.defineProperty(batteryManager, 'charging', {
     get : function () { return batteryManager._charging; }
 });
-Object.defineProperty(batteryManager, "chargingTime", {
+Object.defineProperty(batteryManager, 'chargingTime', {
     get : function () { return batteryManager._chargingTime; }
 });
-Object.defineProperty(batteryManager, "dischargingTime", {
+Object.defineProperty(batteryManager, 'dischargingTime', {
     get : function () { return batteryManager._dischargingTime; }
 });
-Object.defineProperty(batteryManager, "level", {
+Object.defineProperty(batteryManager, 'level', {
     get : function () { return batteryManager._level; }
 });
 
@@ -79,38 +84,46 @@ Object.defineProperty(batteryManager, "level", {
 BatteryManager.prototype._status = function (info) {
     if (info) {
 
-        if (!info.hasOwnProperty('charging')) {
-            info.charging = info.isPlugged;
-        }
-
         if (info.level === null && batteryManager._level !== null) {
             return; // special case where callback is called because we stopped listening to the native side.
         }
 
+        if (!info.hasOwnProperty('charging')) {
+            info.charging = info.isPlugged;
+        }
+
         if (batteryManager._charging !== info.charging) {
             batteryManager._charging = info.charging;
-            cordova.fireWindowEvent("chargingchange", info);
+            cordova.fireWindowEvent('chargingchange', info);
         }
 
-        //not all device provide chargingTime
+        //not all device provide chargingTime or discharging time
         if (info.hasOwnProperty('chargingTime') && (batteryManager._chargingTime !== info.chargingTime)) {
             batteryManager._chargingTime = info.chargingTime;
-            batteryManager.dispatchEvent("chargingtimechange");
+            batteryManager.dispatchEvent('chargingtimechange');
         }
 
-        if (batteryManager._level !== info.level || batteryManager._isPlugged !== info.isPlugged) {
+        if (info.hasOwnProperty('dischargingTime') && (batteryManager._dischargingTime !== info.dischargingTime)) {
+            batteryManager._dischargingTime = info.dischargingTime;
+            batteryManager.dispatchEvent('dischargingtimechange');
+        }
+
+        if (batteryManager._level !== info.level) {
             batteryManager._level = info.level;
-            batteryManager._isPlugged = info.isPlugged;
+            batteryManager.dispatchEvent('levelchange');
         }
     }
 };
+
 
 /**
  * Error callback for battery start
  */
 BatteryManager.prototype._error = function(e) {
-    console.log("Error initializing Battery: " + e);
+    console.log('Error initializing Battery: ' + e);
 };
+
+
 
 /**
 * Keep track of how many handlers we have so we can start and stop 
@@ -118,8 +131,10 @@ BatteryManager.prototype._error = function(e) {
 */
 function handlers() {
     return batteryManager.onchargingchange.numHandlers +
-           batteryManager.onchargingtimechange.numHandlers;
-};
+           batteryManager.onchargingtimechange.numHandlers +       
+           batteryManager.ondischargingtimechange.numHandlers +
+           batteryManager.onlevelchange.numHandlers;
+}
 
 /**
 * Event handlers for when callbacks get registered for the battery.
@@ -129,9 +144,9 @@ function handlers() {
 BatteryManager.onHasSubscribersChange = function () {
     // If we just registered the first handler, make sure native listener is started.
     if (this.numHandlers === 1 && handlers() === 1) {
-        exec(batteryManager._status, batteryManager._error, "Battery", "start", []);
+        exec(batteryManager._status, batteryManager._error, 'Battery', 'start', []);
     } else if (handlers() === 0) {
-        exec(null, null, "Battery", "stop", []);
+        exec(null, null, 'Battery', 'stop', []);
     }
 };
 
@@ -141,7 +156,7 @@ function getBattery() {
             if (batteryManager) {
                 resolve(batteryManager);
             } else {
-                reject("Not Support");
+                reject('Not Support');
             }
         }
     );
