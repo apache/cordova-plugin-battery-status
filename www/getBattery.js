@@ -19,14 +19,19 @@
  *
 */
 
-var cordova = require('cordova'),
-    exec = require('cordova/exec'),
-    channel = require('cordova/channel');
+var exec = require('cordova/exec'),
+    channel = require('cordova/channel'),
+    targetEventHandlers = {};
+
+function addEventHandler(type) {
+    var e = type.toLowerCase();
+    return (targetEventHandlers[e] = channel.create(type));
+}
 
 /**
 * This class contains information about the current battery status.
 */
-var BatteryManager = function() {
+var BatteryManager = function () {
     //The level value:
     // must be set to 0 if the system's battery is depleted and the system is about to be suspended, 
     //and to 1.0 if the battery is full, 
@@ -48,10 +53,10 @@ var BatteryManager = function() {
     this._dischargingTime = 'positive Infinity';
 
     // Create new event handlers on the object (chanel instance);
-    this.onchargingchange = cordova.addWindowEventHandler('chargingchange');
-    this.onchargingtimechange = cordova.addWindowEventHandler('chargingtimechange');
-    this.ondischargingtimechange = cordova.addWindowEventHandler('dischargingtimechange');
-    this.onlevelchange = cordova.addWindowEventHandler('levelchange');
+    this.onchargingchange = addEventHandler('chargingchange');
+    this.onchargingtimechange = addEventHandler('chargingtimechange');
+    this.ondischargingtimechange = addEventHandler('dischargingtimechange');
+    this.onlevelchange = addEventHandler('levelchange');
 
     //set the onHasSubscribersChange to call native bridge when events are subsribed
     this.onchargingchange.onHasSubscribersChange = BatteryManager.onHasSubscribersChange;
@@ -59,70 +64,6 @@ var BatteryManager = function() {
     this.ondischargingtimechange.onHasSubscribersChange = BatteryManager.onHasSubscribersChange;
     this.onlevelchange.onHasSubscribersChange = BatteryManager.onHasSubscribersChange;
 };
-
-
-var batteryManager = new BatteryManager();
-//Readonly properties
-Object.defineProperty(batteryManager, 'charging', {
-    get : function () { return batteryManager._charging; }
-});
-Object.defineProperty(batteryManager, 'chargingTime', {
-    get : function () { return batteryManager._chargingTime; }
-});
-Object.defineProperty(batteryManager, 'dischargingTime', {
-    get : function () { return batteryManager._dischargingTime; }
-});
-Object.defineProperty(batteryManager, 'level', {
-    get : function () { return batteryManager._level; }
-});
-
-/**
- * Callback for battery status
- *
- * @param {Object} info            keys: level, isPlugged , charging, chargingtimechange
- */
-BatteryManager.prototype._status = function (info) {
-    if (info) {
-
-        if (info.level === null && batteryManager._level !== null) {
-            return; // special case where callback is called because we stopped listening to the native side.
-        }
-
-        if (!info.hasOwnProperty('charging')) {
-            info.charging = info.isPlugged;
-        }
-
-        if (batteryManager._charging !== info.charging) {
-            batteryManager._charging = info.charging;
-            cordova.fireWindowEvent('chargingchange', info);
-        }
-
-        //not all device provide chargingTime or discharging time
-        if (info.hasOwnProperty('chargingTime') && (batteryManager._chargingTime !== info.chargingTime)) {
-            batteryManager._chargingTime = info.chargingTime;
-            batteryManager.dispatchEvent('chargingtimechange');
-        }
-
-        if (info.hasOwnProperty('dischargingTime') && (batteryManager._dischargingTime !== info.dischargingTime)) {
-            batteryManager._dischargingTime = info.dischargingTime;
-            batteryManager.dispatchEvent('dischargingtimechange');
-        }
-
-        if (batteryManager._level !== info.level) {
-            batteryManager._level = info.level;
-            batteryManager.dispatchEvent('levelchange');
-        }
-    }
-};
-
-
-/**
- * Error callback for battery start
- */
-BatteryManager.prototype._error = function(e) {
-    console.log('Error initializing Battery: ' + e);
-};
-
 
 
 /**
@@ -150,6 +91,130 @@ BatteryManager.onHasSubscribersChange = function () {
     }
 };
 
+var batteryManager = new BatteryManager();
+//Readonly properties
+Object.defineProperty(batteryManager, 'charging', {
+    get : function () { return batteryManager._charging; }
+});
+Object.defineProperty(batteryManager, 'chargingTime', {
+    get : function () { return batteryManager._chargingTime; }
+});
+Object.defineProperty(batteryManager, 'dischargingTime', {
+    get : function () { return batteryManager._dischargingTime; }
+});
+Object.defineProperty(batteryManager, 'level', {
+    get : function () { return batteryManager._level; }
+});
+
+
+/**
+ * Callback for battery status
+ *
+ * @param {Object} info            keys: level, isPlugged , charging, chargingtimechange
+ */
+BatteryManager.prototype._status = function (info) {
+    if (info) {
+
+        if (info.level === null && batteryManager._level !== null) {
+            return; // special case where callback is called because we stopped listening to the native side.
+        }
+
+        if (!info.hasOwnProperty('charging')) {
+            info.charging = info.isPlugged;
+        }
+
+        if (batteryManager._charging !== info.charging) {
+            batteryManager._charging = info.charging;
+            batteryManager.dispatchEvent('chargingchange');
+        }
+
+        //not all device provide chargingTime or discharging time
+        if (info.hasOwnProperty('chargingTime') && (batteryManager._chargingTime !== info.chargingTime)) {
+            batteryManager._chargingTime = info.chargingTime;
+            batteryManager.dispatchEvent('chargingtimechange');
+        }
+
+        if (info.hasOwnProperty('dischargingTime') && (batteryManager._dischargingTime !== info.dischargingTime)) {
+            batteryManager._dischargingTime = info.dischargingTime;
+            batteryManager.dispatchEvent('dischargingtimechange');
+        }
+
+        if (batteryManager._level !== info.level) {
+            batteryManager._level = info.level;
+            batteryManager.dispatchEvent('levelchange');
+        }
+    }
+};
+
+
+/**
+ * Error callback for battery start
+ */
+BatteryManager.prototype._error = function (e) {
+    console.log('Error initializing Battery: ' + e);
+};
+
+// EventTarget Interface
+/**
+ * Adds an event listener to the target.
+ * @param {string} type The name of the event.
+ * @param {handler} The handler for the event. This is
+ *     called when the event is dispatched.
+ */
+BatteryManager.prototype.addEventListener = function (type, handler) {
+    var e = type.toLowerCase();
+    //if the type is a channel(EventHandler)
+    if ((targetEventHandlers[e] !== 'undefined')) {
+        targetEventHandlers[e].subscribe(handler); 
+    } else {
+        console.log('Error with channel');
+    }
+};
+
+/**
+ * Removes an event listener from the target.
+ * @param {string} type The name of the event.
+ * @param {EventListenerType} handler The handler for the event.
+ */
+BatteryManager.prototype.removeEventListener = function (type, handler) {
+    var e = type.toLowerCase();
+    if (typeof targetEventHandlers[e] !== 'undefined') {
+        targetEventHandlers[e].unsubscribe(handler);
+    } else {
+        console.log('Error with channel in removeListener');
+    }   
+};
+
+function createEvent(type, data) {
+    var event = document.createEvent('Events');
+    event.initEvent(type, false, false);
+    if (data) {
+        for (var i in data) {
+            if (data.hasOwnProperty(i)) {
+                event[i] = data[i];
+            }
+        }
+    }
+    return event;
+}
+
+/**
+ * Dispatches an event and calls all the listeners that are listening to
+ * the type of the event.
+ * @param {!Event} event The event to dispatch.
+ */
+BatteryManager.prototype.dispatchEvent = function (type) {
+    var e = type.toLowerCase(),
+        evt = createEvent(e,null);
+    if (typeof targetEventHandlers[e] !== 'undefined') {
+        setTimeout(function () {
+            targetEventHandlers[e].fire(evt);
+        }, 0);
+    } else {
+        console.log('Error with channel in dispatchEvent');
+    }
+};
+
 function getBattery() {
     return new Promise(
         function (resolve, reject) {
@@ -163,4 +228,3 @@ function getBattery() {
 }
 
 module.exports = getBattery;
-
