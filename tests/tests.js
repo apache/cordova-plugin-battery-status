@@ -312,7 +312,7 @@ exports.defineAutoTests = function () {
 
             it("battery.spec.4.4 should not fire batterycritical event (6 -> 5) if charging", function (done) {
                 if (isWindowsStore) {
-                    pending('Battery status is not supported on windows store');
+                    pending("Battery status is not supported on windows store");
                 }
 
                 onEvent = jasmine.createSpy("BatteryCritical");
@@ -337,7 +337,466 @@ exports.defineAutoTests = function () {
             });
         });
     });
+
+    describe("Battery (navigator.getBattery)", function () {
+        it("battery.spec.5 should exist", function () {
+            if (isWindowsStore) {
+                pending("Battery status is not supported on windows store");
+            }
+
+            expect(navigator.getBattery() ).toBeDefined();
+        });
+
+        it("battery.spec.5.1 should be promise", function () {
+            if (isWindowsStore) {
+                pending("Battery status is not supported on windows store");
+            }
+
+            navigator.getBattery().then(function(battery) {
+                expect(battery).toBeDefined();
+            }, function(reason) {
+              done(new Error("Promise should  be resolved")); // Success
+            });
+        });
+    });
+
+   describe("GetBattery Events", function () {
+
+        describe("chargingchange", function () {
+
+            afterEach(function (done) {
+                if (!isWindowsStore) {
+                    try {
+                        navigator.getBattery().then(function(battery) {
+                            battery.removeEventListener("chargingchange", onEvent);
+                            done();
+                        }, function(reason) {
+                            done(new Error("Promise should be resolved")); 
+                        });
+                    }
+                    catch (e) {
+                        console.err("Error removing batterystatus event listener: " + e);
+                    }
+                }
+            });
+
+            it("battery.spec.6 should fire chargingchange events", function (done) {
+                if (isWindowsStore) {
+                    pending("Battery status is not supported on windows store");
+                }
+                onEvent = jasmine.createSpy("Chargingchange");
+
+                navigator.getBattery().then(function(battery) {
+                    battery.addEventListener("chargingchange", onEvent);
+                    battery._status({
+                        level : 0.8,
+                        charging : false
+                    });
+                    setTimeout(function () {
+                        battery._status({
+                            level : 0.81,
+                            charging : true
+                        });
+                    }, 0);
+                  
+                }, function(reason) {
+                    done(new Error("Promise should be resolved")); 
+                });
+
+                setTimeout(function () {
+                    expect(onEvent).toHaveBeenCalled();
+                    done();
+                }, 100);
+                 
+            });
+
+
+            it("battery.spec.6.1 level should be between 0 and 1", function (done) {
+                if (isWindowsStore) {
+                    pending("Battery status is not supported on windows store");
+                }
+                onEvent = jasmine.createSpy("Chargingchange");
+                var batteryManager = null;
+                navigator.getBattery().then(function(battery) {
+                    batteryManager = battery;
+                    battery.addEventListener("chargingchange", onEvent);
+                    battery._status({
+                        level : 0.9,
+                        charging : true
+                    });
+                }, function(reason) {
+                  done(new Error("Promise should be resolved")); 
+                });
+
+                setTimeout(function () {
+                    expect(batteryManager.level >= 0).toBeTruthy();
+                    expect(batteryManager.level <= 1).toBeTruthy();
+                    done();
+                }, 100);
+              
+            });
+        });
+
+        describe("chargingtimechange without device information", function () {
+
+            afterEach(function (done) {
+                if (!isWindowsStore) {
+                    try {
+                        navigator.getBattery().then(function(battery) {
+                            battery.removeEventListener("chargingtimechange", onEvent);
+                            done();
+                        }, function(reason) {
+                          done(new Error("Promise should be resolved")); 
+                        });
+                    }
+                    catch (e) {
+                        console.err("Error removing chargingtimechange event listener: " + e);
+                    }
+                }
+            });
+
+            it("battery.spec.7 should equal 0 if no information", function (done) {
+                if (isWindowsStore) {
+                    pending("Battery status is not supported on windows store");
+                }
+                onEvent = jasmine.createSpy("Chargingtimechange");
+                var batteryManager = null;
+                navigator.getBattery().then(function(battery) {
+                    battery.addEventListener("chargingtimechange", onEvent);
+                    batteryManager = battery;
+                    battery._status({
+                        level : 0.9,
+                        charging : true
+                    });
+                }, function(reason) {
+                    done(new Error("Promise should be resolved")); 
+                });
+
+                setTimeout(function () {
+                    expect(onEvent).not.toHaveBeenCalled();
+                    //Is a number and not a string
+                    expect(batteryManager.chargingTime).toEqual(0);    
+                    done();
+                }, 100);
+      
+            });
+        });
+        
+        describe("chargingtimechange with device information", function () {
+
+            afterEach(function (done) {
+                if (!isWindowsStore) {
+                    try {
+                        navigator.getBattery().then(function(battery) {
+                            battery.removeEventListener("chargingtimechange", onEvent);
+                            done();
+                        }, function(reason) {
+                          done(new Error("Promise should be resolved")); 
+                        });
+                    }
+                    catch (e) {
+                        console.err("Error removing chargingtimechange event listener: " + e);
+                    }
+                }
+            });
+
+            it("battery.spec.8 should fire chargingtimechange event when charging ", function (done) {
+                if (isWindowsStore) {
+                    pending("Battery status is not supported on windows store");
+                }
+
+                onEvent = jasmine.createSpy("Chargingtimechange");
+                navigator.getBattery().then(function(battery) {
+
+                    battery.addEventListener("chargingtimechange", onEvent);
+                    battery._status({
+                        level : 0.9,
+                        charging : true,
+                        chargingTime : 30
+                    });
+                }, function(reason) {
+                    done(new Error("Promise should be resolved")); 
+                });
+
+                setTimeout(function () {
+                    expect(onEvent).toHaveBeenCalled();
+                    done();
+                }, 100);
+
+            });
+
+            it("battery.spec.8.1 should fire chargingtimechange when dicharging and be equal positive Infinity", function (done) {
+                if (isWindowsStore) {
+                    pending("Battery status is not supported on windows store");
+                }
+
+                onEvent = jasmine.createSpy("Chargingtimechange");
+                var batteryManager = null;
+                navigator.getBattery().then(function(battery) {
+                    batteryManager = battery;
+                    battery.addEventListener("chargingtimechange", onEvent);
+                    battery._status({
+                        level : 0.9,
+                        charging : false,
+                        chargingTime :"positive Infinity"
+                    });
+  
+                }, function(reason) {
+                    done(new Error("Promise should be resolved")); 
+                });
+
+                setTimeout(function () {
+                    expect(onEvent).toHaveBeenCalled(); 
+                    expect(batteryManager.chargingTime).toEqual("positive Infinity");        
+                    done();
+                }, 100);
+            });
+
+            it("battery.spec.8.2 should fire chargingtimechange when battery is full and equal 0", function (done) {
+                if (isWindowsStore) {
+                    pending("Battery status is not supported on windows store");
+                }
+
+                onEvent = jasmine.createSpy("Chargingtimechange");
+                var batteryManager = null;
+                navigator.getBattery().then(function(battery) {
+                    batteryManager = battery;
+                    battery.addEventListener("chargingtimechange", onEvent);
+                    battery._status({
+                        level : 0.9,
+                        charging : true
+                    });
+                    setTimeout(function () {
+                        battery._status({
+                            level : 0.81,
+                            charging : true,
+                            chargingTime : 0
+                        });
+                    }, 0);
+                }, function(reason) {
+                    done(new Error("Promise should be resolved")); 
+                });
+
+                setTimeout(function () {
+                    expect(onEvent).toHaveBeenCalled();
+                    expect(batteryManager.chargingTime).toEqual(0);        
+                    done();
+                }, 100);
+            });
+        });
+
+        describe("dischargingtimechange without device information", function () {
+
+            afterEach(function (done) {
+                if (!isWindowsStore) {
+                    try {
+                        navigator.getBattery().then(function(battery) {
+                            battery.removeEventListener("dischargingtimechange", onEvent);
+                            done();
+                        }, function(reason) {
+                          done(new Error("Promise should  be resolved")); 
+                        });
+                    }
+                    catch (e) {
+                        console.err("Error removing dischargingtimechange event listener: " + e);
+                    }
+                }
+            });
+
+            it("battery.spec.9 should equal positive Infinity ", function (done) {
+               if (isWindowsStore) {
+                    pending("Battery status is not supported on windows store");
+                }
+
+                onEvent = jasmine.createSpy("Dischargingtimechange");
+                var batteryManager = null;
+                navigator.getBattery().then(function(battery) {
+                    battery.addEventListener("dischargingtimechange", onEvent);
+                    batteryManager = battery;
+                    battery._status({
+                        level : 0.9,
+                        charging : false,
+                        dischargingTime : "positive Infinity"
+                    });
+                }, function(reason) {
+                    done(new Error("Promise should  be resolved")); 
+                });
+
+                setTimeout(function () {
+                    expect(onEvent).not.toHaveBeenCalled();  
+                    //Is a number and not a string
+                    expect(batteryManager.dischargingTime).toEqual("positive Infinity");   
+                    done();
+                }, 100);
+
+            });
+        });
+
+        describe("dischargingtimechange with device information", function () {
+            afterEach(function (done) {
+                if (!isWindowsStore) {
+                    try {
+                        navigator.getBattery().then(function(battery) {
+                            battery.removeEventListener("dischargingtimechange", onEvent);
+                            done();
+                        }, function(reason) {
+                          done(new Error("Promise should  be resolved")); 
+                        });
+                    }
+                    catch (e) {
+                        console.err("Error removing dischargingtimechange event listener: " + e);
+                    }
+                }
+            });
+
+            it("battery.spec.10 should fire ondischargingtimechange event when discharging and equal number ", function (done) {
+               if (isWindowsStore) {
+                    pending("Battery status is not supported on windows store");
+                }
+
+                onEvent = jasmine.createSpy("Dischargingtimechange");
+                var batteryManager = null;
+                navigator.getBattery().then(function(battery) {
+                    battery.addEventListener("dischargingtimechange", onEvent);
+                    batteryManager = battery;
+                    battery._status({
+                        level : 0.9,
+                        charging : false,
+                        dischargingTime : 456
+                    });
+                }, function(reason) {
+                    done(new Error("Promise should  be resolved")); 
+                });
+
+                setTimeout(function () {
+                    expect(onEvent).toHaveBeenCalled();  
+                    //Is a number and not a string
+                    expect(batteryManager.dischargingTime).toMatch(/\d{1,}/);   
+                    done();
+                }, 100);
+
+            });
+            
+
+             it("battery.spec.10.1 should fire ondischargingtimechange when charging and be equal positive Infinity", function (done) {
+                if (isWindowsStore) {
+                    pending("Battery status is not supported on windows store");
+                }
+
+                onEvent = jasmine.createSpy("Dischargingtimechange");
+                var batteryManager = null;
+                navigator.getBattery().then(function(battery) {
+                    batteryManager = battery;
+                    battery.addEventListener("dischargingtimechange", onEvent);
+                    battery._status({
+                        level : 0.89,
+                        charging : true,
+                        dischargingTime : "positive Infinity"
+                    });
+                }, function(reason) {
+                    done(new Error("Promise should  be resolved")); 
+                });
+
+                setTimeout(function () {
+                    expect(onEvent).toHaveBeenCalled(); 
+                    expect(batteryManager.dischargingTime).toEqual("positive Infinity");        
+                    done();
+                }, 100);
+            });
+        });
+        describe("levelchange", function () {
+            afterEach(function (done) {
+                if (!isWindowsStore) {
+                    try {
+                        navigator.getBattery().then(function(battery) {
+                            battery.removeEventListener("levelChange", onEvent);
+                            done();
+                        }, function(reason) {
+                          done(new Error("Promise should be resolved")); 
+                        });
+                    }
+                    catch (e) {
+                        console.err("Error removing dischargingtimechange event listener: " + e);
+                    }
+                }
+            });
+
+            it("battery.spec.11 should fire levelChange event when charging", function (done) {
+               if (isWindowsStore) {
+                    pending("Battery status is not supported on windows store");
+                }
+
+                onEvent = jasmine.createSpy("LevelChange");
+                var batteryManager = null;
+                navigator.getBattery().then(function(battery) {
+                    battery.addEventListener("levelChange", onEvent);
+                    batteryManager = battery;
+                    battery._status({
+                        level : 0.9,
+                        charging : true,
+                        dischargingTime : "positive Infinity"
+                    });
+
+                    setTimeout(function () {
+                        battery._status({
+                            level : 0.92,
+                            charging : true,
+                            dischargingTime : "positive Infinity"
+                        });  
+                        done();
+                    }, 0);      
+
+                }, function(reason) {
+                    done(new Error("Promise should be resolved")); 
+                });
+
+                setTimeout(function () {
+                    expect(onEvent).not.toHaveBeenCalled();  
+                    done();
+                }, 100);
+
+            });
+
+            it("battery.spec.11.1 should fire levelChange event when discharging", function (done) {
+               if (isWindowsStore) {
+                    pending("Battery status is not supported on windows store");
+                }
+
+                onEvent = jasmine.createSpy("LevelChange");
+                var batteryManager = null;
+                navigator.getBattery().then(function(battery) {
+                    battery.addEventListener("levelChange", onEvent);
+                    batteryManager = battery;
+                    battery._status({
+                        level : 0.9,
+                        charging : false,
+                        dischargingTime : "positive Infinity"
+                    });
+
+                    setTimeout(function () {
+                        battery._status({
+                            level : 0.85,
+                            charging : false,
+                            dischargingTime : "positive Infinity"
+                        });  
+                        done();
+                    }, 0);      
+
+                }, function(reason) {
+                    done(new Error("Promise should be resolved")); 
+                });
+
+                setTimeout(function () {
+                    expect(onEvent).not.toHaveBeenCalled();  
+                    done();
+                }, 100);
+
+            });
+        });
+
+    });
 };
+
 
 //******************************************************************************************
 //***************************************Manual Tests***************************************
@@ -387,6 +846,93 @@ exports.defineManualTests = function (contentEl, createActionButton) {
 
     function removeCritical() {
         window.removeEventListener("batterycritical", batteryCritical, false);
+    }
+
+
+    /* getBattery */
+    function charingchange() {
+        document.getElementById('lowValue').innerText = "true";
+    }
+
+    function chargingtimechange() {
+        document.getElementById('criticalValue').innerText = "true";
+    } 
+
+    function dischargingtimechange() {
+        document.getElementById('lowValue').innerText = "true";
+    }
+
+    function levelchange() {
+        document.getElementById('criticalValue').innerText = "true";
+    }
+
+
+    function addChargingchange() {
+        navigator.getBattery().then(function(battery) {
+            battery.addEventListener("chargingchange", charingchange);
+        }, function(reason) {
+            done(new Error("Promise should be resolved")); 
+        });
+    }
+
+    function removeChargingchange() {
+        navigator.getBattery().then(function(battery) {
+            battery.removeEventListener("chargingchange", charingchange);
+            done();
+        }, function(reason) {
+          done(new Error("Promise should be resolved")); 
+        });
+    }
+
+    function addChargingtimechange() {
+        navigator.getBattery().then(function(battery) {
+            battery.addEventListener("chargingtimechange", chargingtimechange);
+        }, function(reason) {
+            done(new Error("Promise should be resolved")); 
+        });
+    }
+
+    function removeChargingtimechange() {
+        navigator.getBattery().then(function(battery) {
+            battery.removeEventListener("chargingtimechange", chargingtimechange);
+            done();
+        }, function(reason) {
+          done(new Error("Promise should be resolved")); 
+        });
+    }
+
+    function addDischargingtimechange() {
+        navigator.getBattery().then(function(battery) {
+            battery.addEventListener("dischargingtimechange", dischargingtimechange);
+        }, function(reason) {
+            done(new Error("Promise should be resolved")); 
+        });
+    }
+
+    function removeDischargingtimechange() {
+        navigator.getBattery().then(function(battery) {
+            battery.removeEventListener("dischargingtimechange", dischargingtimechange);
+            done();
+        }, function(reason) {
+          done(new Error("Promise should be resolved")); 
+        });
+    }
+
+    function addLevelchange() {
+        navigator.getBattery().then(function(battery) {
+            battery.addEventListener("levelchange", levelchange);
+        }, function(reason) {
+            done(new Error("Promise should be resolved")); 
+        });
+    }
+
+    function removeLevelchange() {
+        navigator.getBattery().then(function(battery) {
+            battery.removeEventListener("levelchange", levelchange);
+            done();
+        }, function(reason) {
+          done(new Error("Promise should be resolved")); 
+        });
     }
 
     //Generate Dynamic Table
@@ -534,6 +1080,19 @@ exports.defineManualTests = function (contentEl, createActionButton) {
     createActionButton('Remove "batterystatus" listener', function () {
         removeBattery();
     }, 'remBs');
+    createActionButton('Add "batterylow" listener', function () {
+        addLow();
+    }, 'addBl');
+    createActionButton('Remove "batterylow" listener', function () {
+        removeLow();
+    }, 'remBl');
+    createActionButton('Add "batterycritical" listener', function () {
+        addCritical();
+    }, 'addBc');
+    createActionButton('Remove "batterycritical" listener', function () {
+        removeCritical();
+    }, 'remBc');
+    /* getBattery */
     createActionButton('Add "batterylow" listener', function () {
         addLow();
     }, 'addBl');
