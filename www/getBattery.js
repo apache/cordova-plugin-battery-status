@@ -119,6 +119,11 @@ BatteryManager.prototype._status = function (info) {
             return; // special case where callback is called because we stopped listening to the native side.
         }
 
+        //level must be between 0 and 1.0 
+        if (info.level > 1) {
+            info.level = (info.level / 100);
+        }
+
         if (!info.hasOwnProperty('charging')) {
             info.charging = info.isPlugged;
         }

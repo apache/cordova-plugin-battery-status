@@ -851,19 +851,35 @@ exports.defineManualTests = function (contentEl, createActionButton) {
 
     /* getBattery */
     function charingchange() {
-        document.getElementById('lowValue').innerText = "true";
+        navigator.getBattery().then(function(battery) {
+            document.getElementById('chargingValue').innerText = (battery.charging ? "Yes" : "No");
+        }).catch(function(error) {
+            console.log("Failed to get Battery information!", error);
+        });
     }
 
     function chargingtimechange() {
-        document.getElementById('criticalValue').innerText = "true";
+        navigator.getBattery().then(function(battery) {
+            document.getElementById('chargingTimeValue').innerText = battery.chargingTime;
+        }).catch(function(error) {
+            console.log("Failed to get Battery information!", error);
+        });    
     } 
 
     function dischargingtimechange() {
-        document.getElementById('lowValue').innerText = "true";
+        navigator.getBattery().then(function(battery) {
+            document.getElementById('dischargingTimeValue').innerText = battery.dischargingTime;
+        }).catch(function(error) {
+            console.log("Failed to get Battery information!", error);
+        });    
     }
 
     function levelchange() {
-        document.getElementById('criticalValue').innerText = "true";
+        navigator.getBattery().then(function(battery) {
+            document.getElementById('levelValue').innerText = battery.level;
+        }).catch(function(error) {
+            console.log("Failed to get Battery information!", error);
+        });  
     }
 
 
@@ -871,50 +887,49 @@ exports.defineManualTests = function (contentEl, createActionButton) {
         navigator.getBattery().then(function(battery) {
             battery.addEventListener("chargingchange", charingchange);
         }, function(reason) {
-            done(new Error("Promise should be resolved")); 
+            return new Error("Promise should be resolved"); 
         });
     }
 
     function removeChargingchange() {
         navigator.getBattery().then(function(battery) {
             battery.removeEventListener("chargingchange", charingchange);
-            done();
         }, function(reason) {
-          done(new Error("Promise should be resolved")); 
+            return new Error("Promise should be resolved"); 
         });
     }
 
     function addChargingtimechange() {
         navigator.getBattery().then(function(battery) {
             battery.addEventListener("chargingtimechange", chargingtimechange);
+            document.getElementById('chargingTimeValue').innerText = battery.chargingTime;
         }, function(reason) {
-            done(new Error("Promise should be resolved")); 
+            return new Error("Promise should be resolved"); 
         });
     }
 
     function removeChargingtimechange() {
         navigator.getBattery().then(function(battery) {
             battery.removeEventListener("chargingtimechange", chargingtimechange);
-            done();
         }, function(reason) {
-          done(new Error("Promise should be resolved")); 
+            return new Error("Promise should be resolved"); 
         });
     }
 
     function addDischargingtimechange() {
         navigator.getBattery().then(function(battery) {
             battery.addEventListener("dischargingtimechange", dischargingtimechange);
+            document.getElementById("dischargingTimeValue").innerText = battery.dischargingTime;
         }, function(reason) {
-            done(new Error("Promise should be resolved")); 
+            return new Error("Promise should be resolved"); 
         });
     }
 
     function removeDischargingtimechange() {
         navigator.getBattery().then(function(battery) {
             battery.removeEventListener("dischargingtimechange", dischargingtimechange);
-            done();
         }, function(reason) {
-          done(new Error("Promise should be resolved")); 
+          return new Error("Promise should be resolved"); 
         });
     }
 
@@ -922,16 +937,15 @@ exports.defineManualTests = function (contentEl, createActionButton) {
         navigator.getBattery().then(function(battery) {
             battery.addEventListener("levelchange", levelchange);
         }, function(reason) {
-            done(new Error("Promise should be resolved")); 
+            return new Error("Promise should be resolved"); 
         });
     }
 
     function removeLevelchange() {
         navigator.getBattery().then(function(battery) {
             battery.removeEventListener("levelchange", levelchange);
-            done();
         }, function(reason) {
-          done(new Error("Promise should be resolved")); 
+         return new Error("Promise should be resolved"); 
         });
     }
 
@@ -1047,6 +1061,54 @@ exports.defineManualTests = function (contentEl, createActionButton) {
                 row : 4,
                 cell : 1
             }
+        }, {
+            id : "chargingTag",
+            content : "Charging:",
+            tag : "div",
+            position : {
+                row : 5,
+                cell : 0
+            }
+        }, {
+            id : "chargingValue",
+            content : "",
+            tag : "div",
+            position : {
+                row : 5,
+                cell : 1
+            }
+        }, {
+            id : "chargingTimeTag",
+            content : "ChargingTime:",
+            tag : "div",
+            position : {
+                row : 6,
+                cell : 0
+            }
+        }, {
+            id : "chargingTimeValue",
+            content : "",
+            tag : "div",
+            position : {
+                row : 6,
+                cell : 1
+            }
+        }, {
+            id : "dischargingTimeTag",
+            content : "DischargingTime:",
+            tag : "div",
+            position : {
+                row : 7,
+                cell : 0
+            }
+        }, {
+            id : "dischargingTimeValue",
+            content : "",
+            tag : "div",
+            position : {
+                row : 7,
+                cell : 1
+            }
         }
     ];
 
@@ -1056,7 +1118,7 @@ exports.defineManualTests = function (contentEl, createActionButton) {
     div.setAttribute("align", "center");
     contentEl.appendChild(div);
 
-    var batteryTable = generateTable('info', 5, 3, batteryElements);
+    var batteryTable = generateTable('info', 8, 3, batteryElements);
     contentEl.appendChild(batteryTable);
 
     div = document.createElement('h2');
@@ -1072,7 +1134,21 @@ exports.defineManualTests = function (contentEl, createActionButton) {
         '<div id="addBl"></div><div id="remBl"></div>' +
         '<h3>Battery Critical Tests</h3>' +
         '</p> Will update value for battery critical to true when battery is below 5%' +
-        '<div id="addBc"></div><div id="remBc"></div>';
+        '<div id="addBc"></div><div id="remBc"></div>' ;
+
+    //getBattery
+    contentEl.innerHTML += '<h3>Battery charging Tests</h3>' +
+        '</p>  Will update value for batteryManger charging if battery is charging or discharging' +
+        '<div id="addCc"></div><div id="remCc"></div>' +
+        '<h3>Battery chargingTime Tests</h3>' +
+        '</p> Will update value for batteryManger chargingTime when it change' +
+        '<div id="addCtc"></div><div id="remCtc"></div>' +
+        '<h3>Battery dischargingtimechange Tests</h3>' +
+        '</p> Will update value for batteryManger dischargingTime when it change' +
+        '<div id="addDtc"></div><div id="remDtc"></div>' +
+        '<h3>Battery levelchange Tests</h3>' +
+        '</p> Will update value for batteryManger level when it change' +
+        '<div id="addLc"></div><div id="remLc"></div>';
 
     createActionButton('Add "batterystatus" listener', function () {
         addBattery();
@@ -1092,17 +1168,31 @@ exports.defineManualTests = function (contentEl, createActionButton) {
     createActionButton('Remove "batterycritical" listener', function () {
         removeCritical();
     }, 'remBc');
+
     /* getBattery */
-    createActionButton('Add "batterylow" listener', function () {
-        addLow();
-    }, 'addBl');
-    createActionButton('Remove "batterylow" listener', function () {
+    createActionButton('Add "chargingchange" listener', function () {
+        addChargingchange();
+    }, 'addCc');
+    createActionButton('Remove "chargingchange" listener', function () {
         removeLow();
-    }, 'remBl');
-    createActionButton('Add "batterycritical" listener', function () {
-        addCritical();
-    }, 'addBc');
-    createActionButton('Remove "batterycritical" listener', function () {
-        removeCritical();
-    }, 'remBc');
+    }, 'remCc');
+    createActionButton('Add "chargingtimechange" listener', function () {
+        addChargingtimechange();
+    }, 'addCtc');
+    createActionButton('Remove "chargingtimechange" listener', function () {
+        removeChargingtimechange();
+    }, 'remCtc');
+
+    createActionButton('Add "dischargingtimechange" listener', function () {
+        addDischargingtimechange();
+    }, 'addDtc');
+    createActionButton('Remove "dischargingtimechange" listener', function () {
+        removeDischargingtimechange();
+    }, 'remDtc');
+    createActionButton('Add "levelchange" listener', function () {
+        addLevelchange();
+    }, 'addLc');
+    createActionButton('Remove "levelchange" listener', function () {
+        removeLevelchange();
+    }, 'remLc');
 };
