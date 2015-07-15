@@ -35,6 +35,10 @@
     <js-module src="www/getBattery.js" name="getBattery">
         <clobbers target="navigator.getBattery" />
     </js-module>
+
+    <dependency id="es6-promise-plugin"
+        url="https://github.com/vstirbu/PromisesPlugin.git">
+    </dependency>
     
     <!-- android -->
     <platform name="android">

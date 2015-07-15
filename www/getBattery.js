@@ -221,15 +221,25 @@ BatteryManager.prototype.dispatchEvent = function (type) {
 };
 
 function getBattery() {
-    return new Promise(
-        function (resolve, reject) {
-            if (batteryManager) {
-                resolve(batteryManager);
-            } else {
-                reject('Not Support');
-            }
+    var existingBatteryManager = cordova.require('cordova/modulemapper').getOriginalSymbol(window, 'navigator.battery');
+    //Promise detection
+    if (typeof Promise !== 'undefined') {
+        //if implementation use promise (warning with firefoxos)
+        if (typeof existingBatteryManager === 'function' && existingBatteryManager().then === 'function') {
+            return existingBatteryManager();
         }
-    );
+        return new Promise(
+            function (resolve, reject) {
+                if (existingBatteryManager) {
+                    resolve(existingBatteryManager);
+                } else {
+                    resolve(batteryManager);
+                }
+            }
+        );
+    } else {
+        console.log('Promise not supported');
+    }
 }
 
 module.exports = getBattery;
