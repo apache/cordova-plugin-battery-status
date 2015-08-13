@@ -33,21 +33,21 @@ function addEventHandler(type) {
 */
 var BatteryManager = function () {
     //The level value:
-    // must be set to 0 if the system's battery is depleted and the system is about to be suspended, 
-    //and to 1.0 if the battery is full, 
+    // must be set to 0 if the system's battery is depleted and the system is about to be suspended,
+    //and to 1.0 if the battery is full,
     this._level = 1.0;
 
-    //The charging value : 
+    //The charging value :
     //- false if the battery is discharging or full
     //- set to true if the battery is charging
     this._charging = true;
 
-    //ChargingTime value : 
+    //ChargingTime value :
     //- 0 if the battery is full or if there is no battery attached to the system
     //- positive Infinity if the battery is discharging,
     this._chargingTime = 0;
 
-    //_dischargingTime value : 
+    //_dischargingTime value :
     //- positive Infinity, if the battery is charging
     //- positive Infinity if the battery is discharging,
     this._dischargingTime = 'positive Infinity';
@@ -67,12 +67,12 @@ var BatteryManager = function () {
 
 
 /**
-* Keep track of how many handlers we have so we can start and stop 
+* Keep track of how many handlers we have so we can start and stop
 * the native battery listener appropriately (and hopefully save on battery life!).
 */
 function handlers() {
     return batteryManager.onchargingchange.numHandlers +
-           batteryManager.onchargingtimechange.numHandlers +       
+           batteryManager.onchargingtimechange.numHandlers +
            batteryManager.ondischargingtimechange.numHandlers +
            batteryManager.onlevelchange.numHandlers;
 }
@@ -119,7 +119,7 @@ BatteryManager.prototype._status = function (info) {
             return; // special case where callback is called because we stopped listening to the native side.
         }
 
-        //level must be between 0 and 1.0 
+        //level must be between 0 and 1.0
         if (info.level > 1) {
             info.level = (info.level / 100);
         }
@@ -170,7 +170,7 @@ BatteryManager.prototype.addEventListener = function (type, handler) {
     var e = type.toLowerCase();
     //if the type is a channel(EventHandler)
     if ((targetEventHandlers[e] !== 'undefined')) {
-        targetEventHandlers[e].subscribe(handler); 
+        targetEventHandlers[e].subscribe(handler);
     } else {
         console.log('Error with channel');
     }
@@ -187,7 +187,7 @@ BatteryManager.prototype.removeEventListener = function (type, handler) {
         targetEventHandlers[e].unsubscribe(handler);
     } else {
         console.log('Error with channel in removeListener');
-    }   
+    }
 };
 
 function createEvent(type, data) {
@@ -221,7 +221,7 @@ BatteryManager.prototype.dispatchEvent = function (type) {
 };
 
 function getBattery() {
-    var existingBatteryManager = cordova.require('cordova/modulemapper').getOriginalSymbol(window, 'navigator.battery');
+    var existingBatteryManager = cordova.require('cordova/modulemapper').getOriginalSymbol(window, 'navigator.getBattery');
     //Promise detection
     if (typeof Promise !== 'undefined') {
         //if implementation use promise (warning with firefoxos)
@@ -230,11 +230,7 @@ function getBattery() {
         }
         return new Promise(
             function (resolve, reject) {
-                if (existingBatteryManager) {
-                    resolve(existingBatteryManager);
-                } else {
                     resolve(batteryManager);
-                }
             }
         );
     } else {
