@@ -28,6 +28,8 @@ It adds the following three `window` events:
 * batterycritical
 * batterylow
 
+:warning: Report issues on the [Apache Cordova issue tracker](https://issues.apache.org/jira/issues/?jql=project%20%3D%20CB%20AND%20status%20in%20%28Open%2C%20%22In%20Progress%22%2C%20Reopened%29%20AND%20resolution%20%3D%20Unresolved%20AND%20component%20%3D%20%22Plugin%20Battery%20Status%22%20ORDER%20BY%20priority%20DESC%2C%20summary%20ASC%2C%20updatedDate%20DESC)
+
 ## Installation
 
     cordova plugin add cordova-plugin-battery-status
@@ -61,7 +63,7 @@ attach an event listener after the `deviceready` event fires.
 
 ### Android and Amazon Fire OS Quirks
 
-- Warning: the Android + Fire OS implementations are greedy and prolonged use will drain the user's battery. 
+- Warning: the Android + Fire OS implementations are greedy and prolonged use will drain the user's battery.
 
 ### Windows Phone 7 and 8 Quirks
 
@@ -76,7 +78,7 @@ The `level` parameter _is_ supported.
 
 ### Browser Quirks
 
-Supported browsers are Chrome, Firefox and Opera. 
+Supported browsers are Chrome, Firefox and Opera.
 
 ### Example
 
@@ -128,7 +130,7 @@ Windows Phone 8.1 will fire `batterycritical` event regardless of plugged state 
 
 ### Browser Quirks
 
-Supported browsers are Chrome, Firefox and Opera. 
+Supported browsers are Chrome, Firefox and Opera.
 
 ## batterylow
 
@@ -171,4 +173,4 @@ Windows Phone 8.1 will fire `batterylow` event regardless of plugged state as it
 
 ### Browser Quirks
 
-Supported browsers are Chrome, Firefox and Opera. 
+Supported browsers are Chrome, Firefox and Opera.
