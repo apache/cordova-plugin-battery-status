@@ -20,6 +20,10 @@
 -->
 # Release Notes
 
+### 1.1.1 (Nov 18, 2015)
+* CB-10035 Updated `RELEASENOTES` to be newest to oldest
+* Fixing contribute link.
+
 ### 1.1.0 (Jun 17, 2015)
 * added missing license headers
 * CB-7953 Add cordova-plugin-battery-status support for browser platform
