@@ -61,7 +61,15 @@ attach an event listener after the `deviceready` event fires.
 
 ### Android and Amazon Fire OS Quirks
 
-- Warning: the Android + Fire OS implementations are greedy and prolonged use will drain the user's battery. 
+- Warning: the Android + Fire OS implementations are greedy and prolonged use will drain the user's battery.
+
+### Android Quirks
+
+Battery temperature is provided as well (float, Celsius), e.g.:
+
+    function onBatteryStatus(info) {
+        console.log("temperature in Celsius: " + info.temperature);
+    }
 
 ### Windows Phone 7 and 8 Quirks
 
@@ -76,7 +84,7 @@ The `level` parameter _is_ supported.
 
 ### Browser Quirks
 
-Supported browsers are Chrome, Firefox and Opera. 
+Supported browsers are Chrome, Firefox and Opera.
 
 ### Example
 
@@ -128,7 +136,7 @@ Windows Phone 8.1 will fire `batterycritical` event regardless of plugged state 
 
 ### Browser Quirks
 
-Supported browsers are Chrome, Firefox and Opera. 
+Supported browsers are Chrome, Firefox and Opera.
 
 ## batterylow
 
@@ -171,4 +179,4 @@ Windows Phone 8.1 will fire `batterylow` event regardless of plugged state as it
 
 ### Browser Quirks
 
-Supported browsers are Chrome, Firefox and Opera. 
+Supported browsers are Chrome, Firefox and Opera.
