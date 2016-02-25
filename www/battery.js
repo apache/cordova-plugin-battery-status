@@ -26,12 +26,6 @@
 var cordova = require('cordova'),
     exec = require('cordova/exec');
 
-function handlers() {
-  return battery.channels.batterystatus.numHandlers +
-         battery.channels.batterylow.numHandlers +
-         battery.channels.batterycritical.numHandlers;
-}
-
 var STATUS_CRITICAL = 5;
 var STATUS_LOW = 20;
 
@@ -48,6 +42,13 @@ var Battery = function() {
         this.channels[key].onHasSubscribersChange = Battery.onHasSubscribersChange;
     }
 };
+
+function handlers() {
+    return battery.channels.batterystatus.numHandlers +
+        battery.channels.batterylow.numHandlers +
+        battery.channels.batterycritical.numHandlers;
+}
+
 /**
  * Event handlers for when callbacks get registered for the battery.
  * Keep track of how many handlers we have so we can start and stop the native battery listener
@@ -72,7 +73,7 @@ Battery.prototype._status = function (info) {
     if (info) {
         if (battery._level !== info.level || battery._isPlugged !== info.isPlugged) {
             
-            if(info.level == null && battery._level != null) {
+            if(info.level === null && battery._level !== null) {
                 return; // special case where callback is called because we stopped listening to the native side.
             }
             
@@ -104,7 +105,6 @@ Battery.prototype._error = function(e) {
     console.log("Error initializing Battery: " + e);
 };
 
-var battery = new Battery();
+var battery = new Battery(); // jshint ignore:line
 
 module.exports = battery;
-

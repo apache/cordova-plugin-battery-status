@@ -19,8 +19,10 @@
  *
 */
 
-    var _clientListeners = {},
-        _webkitBattery = navigator.webkitBattery || navigator.battery;
+/* global PluginResult */
+
+var _clientListeners = {},
+    _webkitBattery = navigator.webkitBattery || navigator.battery;
 
 module.exports = {
     start: function (success, fail, args, env) {
@@ -35,8 +37,8 @@ module.exports = {
 
                     //put data from webkitBattery into a format cordova expects
                     //webkitBattery seems to return level as a decimal pre 10.2
-                    resultInfo.level = info.level <= 1 ? info.level * 100 : info.level,
-                    resultInfo.isPlugged = info.charging
+                    resultInfo.level = info.level <= 1 ? info.level * 100 : info.level;
+                    resultInfo.isPlugged = info.charging;
                 }
 
                 result.callbackOk(resultInfo, true);

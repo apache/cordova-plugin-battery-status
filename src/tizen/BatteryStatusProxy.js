@@ -19,7 +19,7 @@
  *
 */
 
-var cordova = require('cordova');
+/* global tizen */
 
 var batteryListenerId = null;
 

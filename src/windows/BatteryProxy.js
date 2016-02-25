@@ -19,6 +19,8 @@
  *
  */
 
+/* global WinJS, BatteryStatus */
+
 var stopped;
 
 function handleResponse(successCb, errorCb, jsonResponse) {
@@ -34,6 +36,24 @@ function handleResponse(successCb, errorCb, jsonResponse) {
 
 var Battery = {
     start: function (win, fail, args, env) {
+        function getBatteryStatus(success, error) {
+            handleResponse(success, error, BatteryStatus.BatteryStatus.start());
+        }
+
+        function getBatteryStatusLevelChangeEvent(success, error) {
+            return BatteryStatus.BatteryStatus.getBatteryStatusChangeEvent().done(function (result) {
+                if (stopped) {
+                    return;
+                }
+
+                handleResponse(success, error, result);
+
+                setTimeout(function() { getBatteryStatusLevelChangeEvent(success, error); }, 0);
+            }, function(err) {
+                fail(err);
+            });
+        }
+
         // Battery API supported on Phone devices only so in case of
         // desktop/tablet the only one choice is to fail with appropriate message.
         if (!WinJS.Utilities.isPhone) {
@@ -43,30 +63,11 @@ var Battery = {
 
         stopped = false;
         try {
-            function getBatteryStatus(success, error) {
-                handleResponse(success, error, BatteryStatus.BatteryStatus.start());
-            }
-
-            function getBatteryStatusLevelChangeEvent(success, error) {
-                return BatteryStatus.BatteryStatus.getBatteryStatusChangeEvent().done(function (result) {
-                    if (stopped) {
-                        return;
-                    }
-
-                    handleResponse(success, error, result);
-
-                    setTimeout(function() { getBatteryStatusLevelChangeEvent(success, error); }, 0);
-                }, function(err) {
-                    fail(err);
-                });
-            }
-
             getBatteryStatus(win, fail);
-
             getBatteryStatusLevelChangeEvent(win, fail);
         } catch(e) {
             fail(e);
-        }        
+        }
     },
 
     stop: function () {

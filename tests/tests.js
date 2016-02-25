@@ -19,6 +19,9 @@
  *
  */
 
+/* jshint jasmine: true */
+/* global WinJS */
+
 exports.defineAutoTests = function () {
     var isWindowsStore = (cordova.platformId == "windows8") || (cordova.platformId == "windows" && !WinJS.Utilities.isPhone),
         onEvent;
@@ -44,7 +47,7 @@ exports.defineAutoTests = function () {
                         window.removeEventListener("batterystatus", onEvent, false);
                     }
                     catch (e) {
-                        console.err('Error removing batterystatus event listener: ' + e)
+                        console.err('Error removing batterystatus event listener: ' + e);
                     }
                 }
             });
@@ -80,7 +83,7 @@ exports.defineAutoTests = function () {
                         window.removeEventListener("batterylow", onEvent, false);
                     }
                     catch (e) {
-                        console.err('Error removing batterylow event listener: ' + e)
+                        console.err('Error removing batterylow event listener: ' + e);
                     }
                 }
             });
@@ -199,7 +202,7 @@ exports.defineAutoTests = function () {
                         window.removeEventListener("batterycritical", onEvent, false);
                     }
                     catch (e) {
-                        console.err('Error removing batterycritical event listener: ' + e)
+                        console.err('Error removing batterycritical event listener: ' + e);
                     }
                 }
             });

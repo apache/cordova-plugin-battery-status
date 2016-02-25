@@ -42,7 +42,7 @@ var Battery = {
                     w3cBattery.onlevelchange = success;
                     w3cBattery.onchargingchange = success;
                 }
-            }
+            };
 
             if (typeof navigator.getBattery === 'function') {
                 navigator.getBattery().then(function(battery) { 
@@ -59,7 +59,7 @@ var Battery = {
             }
         } catch(e) {
             fail(e);
-        };
+        }
     },
 
     stop: function() {
@@ -73,7 +73,7 @@ var Battery = {
             }
         } catch(e) {
             console.warn('Error occured while trying to stop battery: ' + JSON.stringify(e));
-        };
+        }
     }
 };
 

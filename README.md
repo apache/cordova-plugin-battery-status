@@ -17,6 +17,8 @@
 #         under the License.
 -->
 
+[![Build Status](https://travis-ci.org/apache/cordova-plugin-battery-status.svg?branch=master)](https://travis-ci.org/apache/cordova-plugin-battery-status)
+
 # cordova-plugin-battery-status
 
 
