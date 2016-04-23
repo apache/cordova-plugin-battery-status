@@ -1,3 +1,7 @@
+---
+title: Battery Status
+description: Get events for device battery level.
+---
 <!--
 # license: Licensed to the Apache Software Foundation (ASF) under one
 #         or more contributor license agreements.  See the NOTICE file
