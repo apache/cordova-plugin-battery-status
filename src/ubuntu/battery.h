@@ -25,6 +25,7 @@
 
 #include <cplugin.h>
 
+
 class BatteryStatus: public CPlugin {
     Q_OBJECT
 public:
@@ -47,15 +48,14 @@ public slots:
     void stop(int scId, int ecId);
 
 private slots:
-    void remainingCapacityChanged(int battery, int capacity);
+    void remainingCapacityChanged(int capacity);
+    void batteryCountChanged(int count);
     void chargerTypeChanged(QBatteryInfo::ChargerType type);
-    void onlineStatusChanged(bool isOnline);
 
 private:
     void fireEvents();
 
     QBatteryInfo _batteryInfo;
-
     int _scId;
 };
 
