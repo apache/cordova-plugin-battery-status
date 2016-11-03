@@ -19,9 +19,10 @@
  *
  */
 
-/* global WinJS, BatteryStatus */
+/* global BatteryStatus */
 
 var stopped;
+var batteryApiSupported = true;
 
 function handleResponse(successCb, errorCb, jsonResponse) {
     var info = JSON.parse(jsonResponse);
@@ -54,26 +55,27 @@ var Battery = {
             });
         }
 
-        // Battery API supported on Phone devices only so in case of
-        // desktop/tablet the only one choice is to fail with appropriate message.
-        if (!WinJS.Utilities.isPhone) {
-            fail("The operation is not supported on Windows Desktop devices.");
-            return;
-        }
-
         stopped = false;
         try {
             getBatteryStatus(win, fail);
             getBatteryStatusLevelChangeEvent(win, fail);
-        } catch(e) {
-            fail(e);
+        } catch (e) {
+            if (e.message.indexOf("System.TypeLoadException") >= 0) {
+                // Battery API is supported only on Phone devices
+                batteryApiSupported = false;
+                fail("This operation is not supported on this device.");
+                return;
+            } else {
+                fail(e.message);
+            }
+
         }
     },
 
     stop: function () {
         // Battery API supported on Phone devices only so in case of
         // desktop/tablet device we don't need for any actions.
-        if (!WinJS.Utilities.isPhone) {
+        if (!batteryApiSupported) {
             return;
         }
 
