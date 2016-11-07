@@ -19,7 +19,38 @@
  *
  */
 
-/* global WinJS, BatteryStatus */
+/* global Windows, WinJS, BatteryStatus */
+
+var PowerManager = Windows && Windows.System &&
+    Windows.System.Power && Windows.System.Power.PowerManager;
+
+if (PowerManager) {
+    var BatteryWin10 = {
+        start: function (win, fail) {
+
+            function reportStatus() {
+                win({
+                    level: PowerManager.remainingChargePercent,
+                    isPlugged: PowerManager.powerSupplyStatus !== Windows.System.Power.PowerSupplyStatus.notPresent
+                }, { keepCallback: true });
+            }
+
+            PowerManager.onremainingchargepercentchanged = reportStatus;
+            PowerManager.onpowersupplystatuschanged = reportStatus;
+
+            reportStatus();
+        },
+
+        stop: function () {
+            PowerManager.onremainingchargepercentchanged = null;
+            PowerManager.onpowersupplystatuschanged = null;
+        }
+    };
+
+    require("cordova/exec/proxy").add("Battery", BatteryWin10);
+    return;
+}
+
 
 var stopped;
 
