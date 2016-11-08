@@ -25,25 +25,34 @@ var PowerManager = Windows && Windows.System &&
     Windows.System.Power && Windows.System.Power.PowerManager;
 
 if (PowerManager) {
+    var pluginCallback;
+    var reportStatus = function () {
+        if (!pluginCallback) {
+            return;
+        }
+
+        pluginCallback({
+            level: PowerManager.remainingChargePercent,
+            isPlugged: PowerManager.powerSupplyStatus !== Windows.System.Power.PowerSupplyStatus.notPresent
+        }, { keepCallback: true });
+    };
+
     var BatteryWin10 = {
         start: function (win, fail) {
-
-            function reportStatus() {
-                win({
-                    level: PowerManager.remainingChargePercent,
-                    isPlugged: PowerManager.powerSupplyStatus !== Windows.System.Power.PowerSupplyStatus.notPresent
-                }, { keepCallback: true });
-            }
-
-            PowerManager.onremainingchargepercentchanged = reportStatus;
-            PowerManager.onpowersupplystatuschanged = reportStatus;
+            pluginCallback = win;
+            PowerManager.addEventListener('remainingchargepercentchanged', reportStatus);
+            PowerManager.addEventListener('powersupplystatuschanged', reportStatus);
 
             reportStatus();
         },
 
         stop: function () {
-            PowerManager.onremainingchargepercentchanged = null;
-            PowerManager.onpowersupplystatuschanged = null;
+            if (pluginCallback) {
+                PowerManager.removeEventListener('remainingchargepercentchanged', reportStatus);
+                PowerManager.removeEventListener('powersupplystatuschanged', reportStatus);
+            }
+
+            pluginCallback = null;
         }
     };
 
