@@ -23,8 +23,9 @@
 /* global Windows, WinJS */
 
 exports.defineAutoTests = function () {
-    var hasPowerManagerAPI = Windows && Windows.System &&
-        Windows.System.Power && Windows.System.Power.PowerManager;
+    var hasPowerManagerAPI = cordova.platformId === "windows" &&
+        Windows && Windows.System && Windows.System.Power &&
+        Windows.System.Power.PowerManager;
 
     var batteryStatusUnsupported = cordova.platformId === "windows8" ||
         // We don't test battery status on Windows when there is no corresponding APIs available
