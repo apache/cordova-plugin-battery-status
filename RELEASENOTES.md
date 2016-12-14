@@ -21,6 +21,12 @@
 # Release Notes
 
 
+### 1.2.2 (Dec 12, 2016)
+* [CB-12227](https://issues.apache.org/jira/browse/CB-12227) (windows) Fixed Browserify error
+* [CB-12236](https://issues.apache.org/jira/browse/CB-12236) - Fix RELEASENOTES.md for cordova-plugin-battery-status
+* [CB-12230](https://issues.apache.org/jira/browse/CB-12230) Removed Windows 8.1 build badges
+* [CB-12224](https://issues.apache.org/jira/browse/CB-12224) Incremented plugin version.
+
 ### 1.2.1 (Dec 07, 2016)
 
 * [CB-12224](https://issues.apache.org/jira/browse/CB-12224) Updated version and RELEASENOTES.md for release 1.2.1
