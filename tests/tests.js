@@ -123,6 +123,7 @@ exports.defineAutoTests = function () {
             });
 
             it("battery.spec.3.1 should fire batterylow event (30 -> 19)", function (done) {
+                fail('testing PR');
                 if (batteryStatusUnsupported) {
                     pending('Battery status is not supported on windows store');
                 }
