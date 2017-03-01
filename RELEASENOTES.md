@@ -21,6 +21,10 @@
 # Release Notes
 
 
+### 1.2.3 (Feb 28, 2017)
+* [CB-12369](https://issues.apache.org/jira/browse/CB-12369) Add plugin typings from `DefinitelyTyped`
+* [CB-12363](https://issues.apache.org/jira/browse/CB-12363) Added build badges for **iOS 9.3** and **iOS 10.0**
+
 ### 1.2.2 (Dec 12, 2016)
 * [CB-12227](https://issues.apache.org/jira/browse/CB-12227) (windows) Fixed Browserify error
 * [CB-12236](https://issues.apache.org/jira/browse/CB-12236) - Fix RELEASENOTES.md for cordova-plugin-battery-status
