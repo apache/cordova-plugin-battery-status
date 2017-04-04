@@ -54,9 +54,14 @@ exports.defineAutoTests = function () {
                         window.removeEventListener("batterystatus", onEvent, false);
                     }
                     catch (e) {
-                        console.err('Error removing batterystatus event listener: ' + e);
+                        console.error('Error removing batterystatus event listener: ' + e);
                     }
                 }
+            });
+
+            it("battery.spec.1.5 should fail and be shown up in the CI", function (done) {
+                expect(1).toBe(3);
+                done();
             });
 
             it("battery.spec.2 should fire batterystatus events", function (done) {
