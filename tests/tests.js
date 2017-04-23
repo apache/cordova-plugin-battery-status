@@ -59,6 +59,11 @@ exports.defineAutoTests = function () {
                 }
             });
 
+            it("battery.spec.1.5 should fail and be shown up in the CI", function (done) {
+                expect(1).toBe(4);
+                done();
+            });
+
             it("battery.spec.2 should fire batterystatus events", function (done) {
                 if (batteryStatusUnsupported) {
                     pending('Battery status is not supported on windows store');
