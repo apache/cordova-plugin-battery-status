@@ -21,6 +21,9 @@
     "type": "git",
     "url": "https://github.com/apache/cordova-plugin-battery-status"
   },
+  "bugs": {
+    "url": "https://github.com/apache/cordova-website/issues"
+  },
   "keywords": [
     "cordova",
     "battery",
