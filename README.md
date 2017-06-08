@@ -54,7 +54,7 @@ Fires when the battery charge percentage changes by at least 1 percent, or when 
 
     window.addEventListener("batterystatus", onBatteryStatus, false);
 
-    function onBatteryStatus(status) {
+    function onBatteryStatus(event, status) {
         console.log("Level: " + status.level + " isPlugged: " + status.isPlugged);
     }
 
@@ -89,7 +89,7 @@ Fires when the battery charge percentage reaches the low charge threshold. This 
 
     window.addEventListener("batterylow", onBatteryLow, false);
 
-    function onBatteryLow(status) {
+    function onBatteryLow(event, status) {
         alert("Battery Level Low " + status.level + "%");
     }
 
@@ -115,7 +115,7 @@ Fires when the battery charge percentage reaches the critical charge threshold. 
 
     window.addEventListener("batterycritical", onBatteryCritical, false);
 
-    function onBatteryCritical(status) {
+    function onBatteryCritical(event, status) {
         alert("Battery Level Critical " + status.level + "%\nRecharge Soon!");
     }
 
