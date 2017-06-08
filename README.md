@@ -27,6 +27,8 @@ description: Get events for device battery level.
 
 # cordova-plugin-battery-status
 
+DUMMY ENTRY
+
 This plugin provides an implementation of an old version of the [Battery Status Events API][w3c_spec]. It adds the following three events to the `window` object:
 
 * batterystatus
