@@ -123,3 +123,4 @@ if (PowerManager) {
 
     require("cordova/exec/proxy").add("Battery", Battery);
 }
+
