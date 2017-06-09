@@ -56,16 +56,16 @@ if (PowerManager) {
         }
     };
 
-    require("cordova/exec/proxy").add("Battery", BatteryWin10);
+    require('cordova/exec/proxy').add('Battery', BatteryWin10);
 
 } else {
-    
+
     var stopped;
 
-    var handleResponse = function(successCb, errorCb, jsonResponse) {
+    var handleResponse = function (successCb, errorCb, jsonResponse) {
         var info = JSON.parse(jsonResponse);
 
-        if (info.hasOwnProperty("exceptionMessage")) {
+        if (info.hasOwnProperty('exceptionMessage')) {
             errorCb(info.exceptionMessage);
             return;
         }
@@ -75,11 +75,11 @@ if (PowerManager) {
 
     var Battery = {
         start: function (win, fail, args, env) {
-            function getBatteryStatus(success, error) {
+            function getBatteryStatus (success, error) {
                 handleResponse(success, error, BatteryStatus.BatteryStatus.start());
             }
 
-            function getBatteryStatusLevelChangeEvent(success, error) {
+            function getBatteryStatusLevelChangeEvent (success, error) {
                 return BatteryStatus.BatteryStatus.getBatteryStatusChangeEvent().done(function (result) {
                     if (stopped) {
                         return;
@@ -87,8 +87,8 @@ if (PowerManager) {
 
                     handleResponse(success, error, result);
 
-                    setTimeout(function() { getBatteryStatusLevelChangeEvent(success, error); }, 0);
-                }, function(err) {
+                    setTimeout(function () { getBatteryStatusLevelChangeEvent(success, error); }, 0);
+                }, function (err) {
                     fail(err);
                 });
             }
@@ -96,7 +96,7 @@ if (PowerManager) {
             // Battery API supported on Phone devices only so in case of
             // desktop/tablet the only one choice is to fail with appropriate message.
             if (!WinJS.Utilities.isPhone) {
-                fail("The operation is not supported on Windows Desktop devices.");
+                fail('The operation is not supported on Windows Desktop devices.');
                 return;
             }
 
@@ -104,7 +104,7 @@ if (PowerManager) {
             try {
                 getBatteryStatus(win, fail);
                 getBatteryStatusLevelChangeEvent(win, fail);
-            } catch(e) {
+            } catch (e) {
                 fail(e);
             }
         },
@@ -121,5 +121,5 @@ if (PowerManager) {
         }
     };
 
-    require("cordova/exec/proxy").add("Battery", Battery);
+    require('cordova/exec/proxy').add('Battery', Battery);
 }
