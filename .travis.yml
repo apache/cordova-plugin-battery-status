@@ -69,4 +69,4 @@ install:
 script:
 - npm test
 - node /tmp/paramedic/main.js --config pr/$PLATFORM --plugin $(pwd) --shouldUseSauce
-  --buildName travis-plugin-battery-status-$TRAVIS_BUILD_NUMBER-$TRAVIS_JOB_NUMBER
+  --buildName travis-plugin-battery-status-$TRAVIS_JOB_NUMBER
