@@ -4,7 +4,8 @@ addons:
     secure: gMxejQseRVRfUnS9dl5Un9fgbQafs0WDwyesZxhaVc1+LL8NI0NTBc7uP5xBBIqjrp+e8ciHVkKMGvEb/SMX5HmWdO6Wn7TREGJeN2ucuiyZP0SXd1vmSJ/FsMYcHKrqnj10KvSHvvZJFk2PUw1f99/KDyCVkXvPZM3P+lQCGPY=
 env:
   global:
-    - SAUCE_USERNAME=snay
+  - SAUCE_USERNAME=snay
+  - TRAVIS_NODE_VERSION="4.2"
 matrix:
   include:
   - env: PLATFORM=ios-9.3
@@ -20,7 +21,6 @@ matrix:
   - env: PLATFORM=android-4.4
     os: linux
     language: android
-    node_js: '4.2'
     jdk: oraclejdk8
     android:
       components:
@@ -29,7 +29,6 @@ matrix:
   - env: PLATFORM=android-5.1
     os: linux
     language: android
-    node_js: '4.2'
     jdk: oraclejdk8
     android:
       components:
@@ -38,7 +37,6 @@ matrix:
   - env: PLATFORM=android-6.0
     os: linux
     language: android
-    node_js: '4.2'
     jdk: oraclejdk8
     android:
       components:
@@ -47,7 +45,6 @@ matrix:
   - env: PLATFORM=android-7.0
     os: linux
     language: android
-    node_js: '4.2'
     jdk: oraclejdk8
     android:
       components:
@@ -55,7 +52,7 @@ matrix:
       - tools
 before_install:
 - npm cache clean -f
-- npm install -g n
+- rm -rf ~/.nvm && git clone https://github.com/creationix/nvm.git ~/.nvm && (cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`) && source ~/.nvm/nvm.sh && nvm install $TRAVIS_NODE_VERSION
 - node --version
 - if [[ "$PLATFORM" =~ android ]]; then gradle --version; fi
 - if [[ "$PLATFORM" =~ ios ]]; then npm install -g ios-deploy; fi
