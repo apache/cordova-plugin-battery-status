@@ -57,7 +57,9 @@ function handlers() {
 Battery.onHasSubscribersChange = function() {
   // If we just registered the first handler, make sure native listener is started.
   if (this.numHandlers === 1 && handlers() === 1) {
-      exec(battery._status, battery._error, "Battery", "start", []);
+      exec(function() {
+        exec(battery._status, battery._error, "Battery", "start", []);
+      }, battery._error, "Battery", "stop", []);
   } else if (handlers() === 0) {
       exec(null, null, "Battery", "stop", []);
   }
