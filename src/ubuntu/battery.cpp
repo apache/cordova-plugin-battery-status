@@ -22,16 +22,34 @@
 
 #include "battery.h"
 
-BatteryStatus::BatteryStatus(Cordova *cordova) : CPlugin(cordova) {
-    _scId = 0;
+BatteryStatus::BatteryStatus(Cordova *cordova)
+        : CPlugin(cordova),
+          _scId(0) {
 
-    connect(&_batteryInfo, SIGNAL(remainingCapacityChanged(int,int)), this, SLOT(remainingCapacityChanged(int,int)));
-    connect(&_batteryInfo, SIGNAL(chargerTypeChanged(QBatteryInfo::ChargerType)), this, SLOT(chargerTypeChanged(QBatteryInfo::ChargerType)));
+    connect(&_batteryInfo,
+            SIGNAL(remainingCapacityChanged(int)),
+            this,
+            SLOT(remainingCapacityChanged(int)));
+
+    connect(&_batteryInfo,
+            SIGNAL(batteryCountChanged(int)),
+            this,
+            SLOT(batteryCountChanged(int)));
+
+    connect(&_batteryInfo,
+            SIGNAL(chargerTypeChanged(QBatteryInfo::ChargerType)),
+            this,
+            SLOT(chargerTypeChanged(QBatteryInfo::ChargerType)));
 }
 
-void BatteryStatus::remainingCapacityChanged(int battery, int capacity) {
-    Q_UNUSED(battery);
+void BatteryStatus::remainingCapacityChanged(int capacity) {
     Q_UNUSED(capacity);
+
+    fireEvents();
+}
+
+void BatteryStatus::batteryCountChanged(int count) {
+    Q_UNUSED(count);
 
     fireEvents();
 }
@@ -48,11 +66,15 @@ void BatteryStatus::fireEvents() {
 
     int remaining = 0, total = 0;
     for (int i = 0; i < _batteryInfo.batteryCount(); i++) {
-        isPlugged = (_batteryInfo.chargingState(i) == QBatteryInfo::Charging) || isPlugged;
-        fullCount += _batteryInfo.chargingState(i) == QBatteryInfo::Full;
+        QBatteryInfo bi(i);
 
-        remaining += _batteryInfo.remainingCapacity(i);
-        total += _batteryInfo.maximumCapacity(i);
+        if (bi.isValid()) {
+          isPlugged = (bi.chargingState() == QBatteryInfo::Charging) || isPlugged;
+          fullCount += bi.chargingState() == QBatteryInfo::LevelFull;
+
+          remaining += bi.remainingCapacity();
+          total += bi.maximumCapacity();
+        }
     }
 
     isPlugged = isPlugged || (_batteryInfo.batteryCount() == fullCount);
