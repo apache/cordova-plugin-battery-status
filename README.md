@@ -60,26 +60,14 @@ Fires when the battery charge percentage changes by at least 1 percent, or when 
 
 ### Supported Platforms
 
-- Amazon Fire OS
 - iOS
 - Android
-- BlackBerry 10
-- Windows Phone 7 and 8
-- Windows (Windows Phone 8.1 and Windows 10)
-- Firefox OS
+- Windows
 - Browser (Chrome, Firefox, Opera)
 
-### Quirks: Android &amp; Amazon Fire OS
+### Quirks: Android
 
-**Warning**: the Android and Fire OS implementations are greedy and prolonged use will drain the device's battery.
-
-### Quirks: Windows Phone 7 &amp; Windows Phone 8
-
-The `level` property is _not_ supported on Windows Phone 7 because the OS does not provide native APIs to determine battery level. The `isPlugged` parameter _is_ supported.
-
-### Quirks: Windows Phone 8.1
-
-The `isPlugged` parameter is _not_ supported on Windows Phone 8.1. The `level` parameter _is_ supported.
+**Warning**: the Android implementation is greedy and prolonged use will drain the device's battery.
 
 ## batterylow event
 
@@ -95,17 +83,10 @@ Fires when the battery charge percentage reaches the low charge threshold. This 
 
 ### Supported Platforms
 
-- Amazon Fire OS
 - iOS
 - Android
-- BlackBerry 10
-- Firefox OS
-- Windows (Windows Phone 8.1 and Windows 10)
+- Windows
 - Browser (Chrome, Firefox, Opera)
-
-### Quirks: Windows Phone 8.1
-
-The `batterylow` event fires on Windows Phone 8.1 irrespective of whether the device is plugged in or not. This happens because the OS does not provide an API to detect whether the device is plugged in.
 
 ## batterycritical event
 
@@ -121,17 +102,11 @@ Fires when the battery charge percentage reaches the critical charge threshold. 
 
 ### Supported Platforms
 
-- Amazon Fire OS
 - iOS
 - Android
-- BlackBerry 10
-- Firefox OS
-- Windows (Windows Phone 8.1 and Windows 10)
+- Windows
 - Browser (Chrome, Firefox, Opera)
 
-### Quirks: Windows Phone 8.1
-
-The `batterycritical` event fires on Windows Phone 8.1 irrespective of whether the device is plugged in or not. This happens because the OS does not provide an API to detect whether the device is plugged in.
 
 [w3c_spec]: http://www.w3.org/TR/2011/WD-battery-status-20110915/
 [status_object]: #status-object
