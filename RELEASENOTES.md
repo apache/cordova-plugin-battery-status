@@ -21,6 +21,9 @@
 
 # Release Notes
 
+### 2.0.0 (Dec 15, 2017)
+* [CB-13667](https://issues.apache.org/jira/browse/CB-13667): Remove deprecated platforms
+
 ### 1.2.5 (Nov 06, 2017)
 * [CB-13299](https://issues.apache.org/jira/browse/CB-13299) (CI) Fix **Android** builds
 * [CB-12895](https://issues.apache.org/jira/browse/CB-12895) added `eslint` and removed `jshint`
