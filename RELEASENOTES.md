@@ -21,6 +21,9 @@
 
 # Release Notes
 
+### 2.0.2 (Apr 12, 2018)
+* [CB-10645](https://issues.apache.org/jira/browse/CB-10645) The battery status handler doesn't reinitialize on **Android** after `window.location.reload()`. Instead of throwing an error, rather remove the status handler and re-initialize.
+
 ### 2.0.1 (Dec 27, 2017)
 * [CB-13700](https://issues.apache.org/jira/browse/CB-13700) Fix to allow 2.0.0 version install (#62)
 
