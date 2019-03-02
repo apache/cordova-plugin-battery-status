@@ -108,5 +108,5 @@ Fires when the battery charge percentage reaches the critical charge threshold. 
 - Browser (Chrome, Firefox, Opera)
 
 
-[w3c_spec]: http://www.w3.org/TR/2011/WD-battery-status-20110915/
+[w3c_spec]: https://www.w3.org/TR/battery-status/
 [status_object]: #status-object
