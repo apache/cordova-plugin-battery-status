@@ -1,6 +1,6 @@
 {
   "name": "cordova-plugin-battery-status",
-  "version": "2.0.3-dev",
+  "version": "2.0.3",
   "description": "Cordova Battery Plugin",
   "types": "./types/index.d.ts",
   "cordova": {

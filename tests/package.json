@@ -1,6 +1,6 @@
 {
   "name": "cordova-plugin-battery-status-tests",
-  "version": "1.2.4-dev",
+  "version": "2.0.3",
   "description": "",
   "cordova": {
     "id": "cordova-plugin-battery-status-tests",
