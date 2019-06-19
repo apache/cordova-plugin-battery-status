@@ -25,8 +25,8 @@
     <description>Cordova Battery Plugin</description>
     <license>Apache 2.0</license>
     <keywords>cordova,battery</keywords>
-    <repo>https://git-wip-us.apache.org/repos/asf/cordova-plugin-battery-status.git</repo>
-    <issue>https://issues.apache.org/jira/browse/CB/component/12320643</issue>
+    <repo>https://github.com/apache/cordova-plugin-battery-status</repo>
+    <issue>https://github.com/apache/cordova-plugin-battery-status/issues</issue>
 
     <js-module src="www/battery.js" name="battery">
         <clobbers target="navigator.battery" />
