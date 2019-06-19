@@ -21,6 +21,19 @@
 
 # Release Notes
 
+### 2.0.3 (Jun 19, 2019)
+
+-   build: add `.gitattributes` to force LF (instead of possible CRLF on Windows) ([`aded849`](https://github.com/apache/cordova-plugin-battery-status/commit/aded849))
+-   build: add `.npmignore` to remove unneeded files from npm package ([`55bca62`](https://github.com/apache/cordova-plugin-battery-status/commit/55bca62))
+-   fix(types): remove version number ([`56b3d6c`](https://github.com/apache/cordova-plugin-battery-status/commit/56b3d6c))
+-   chore: update github repo and issue link in plugin.xml ([`9c5c510`](https://github.com/apache/cordova-plugin-battery-status/commit/9c5c510))
+-   docs: remove outdated translations ([`fb13300`](https://github.com/apache/cordova-plugin-battery-status/commit/fb13300))
+-   ci(travis): Update Travis CI configuration for new paramedic ([#75](https://github.com/apache/cordova-plugin-battery-status/issues/75)) ([`58a3c2d`](https://github.com/apache/cordova-plugin-battery-status/commit/58a3c2d))
+-   feat: update typings ([#72](https://github.com/apache/cordova-plugin-battery-status/issues/72)) ([`41d35b7`](https://github.com/apache/cordova-plugin-battery-status/commit/41d35b7))
+-   chore: drop Node.js v4 support ([#73](https://github.com/apache/cordova-plugin-battery-status/issues/73)) ([`83c6e44`](https://github.com/apache/cordova-plugin-battery-status/commit/83c6e44))
+-   chore(github): Add or update GitHub pull request and issue template ([`9c272a6`](https://github.com/apache/cordova-plugin-battery-status/commit/9c272a6))
+-   ci(travis): add android-27 to `android update sdk -u --filter` ([`53beb6d`](https://github.com/apache/cordova-plugin-battery-status/commit/53beb6d))
+
 ### 2.0.2 (Apr 12, 2018)
 * [CB-10645](https://issues.apache.org/jira/browse/CB-10645) The battery status handler doesn't reinitialize on **Android** after `window.location.reload()`. Instead of throwing an error, rather remove the status handler and re-initialize.
 
