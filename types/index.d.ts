@@ -1,4 +1,4 @@
-// Type definitions for cordova-plugin-battery-status 2.0
+// Type definitions for cordova-plugin-battery-status
 // Project: https://github.com/apache/cordova-plugin-battery-status
 // Definitions by: Microsoft Open Technologies Inc <http://msopentech.com>
 //                 Tim Brust <https://github.com/timbru31>
