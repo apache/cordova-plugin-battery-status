@@ -112,6 +112,8 @@
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateBatteryStatus:)
                                                      name:UIDeviceBatteryLevelDidChangeNotification object:nil];
     }
+    // push out the first update immediately
+    [self updateBatteryStatus:nil];
 }
 
 /* turn off battery monitoring */
