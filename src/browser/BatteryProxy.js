@@ -19,11 +19,16 @@
  *
  */
 
+/* global cordova */
+
 var w3cBattery;
 var winCallBack;
 
 function success () {
-    winCallBack({ level: w3cBattery.level * 100, isPlugged: w3cBattery.charging });
+    winCallBack({
+        level: w3cBattery.level * 100,
+        isPlugged: w3cBattery.charging
+    });
 }
 
 var Battery = {
@@ -49,7 +54,7 @@ var Battery = {
                     subscribe(battery);
                 });
             } else {
-                var origBattery = cordova.require('cordova/modulemapper').getOriginalSymbol(window, 'navigator.battery'); // eslint-disable-line no-undef
+                var origBattery = cordova.require('cordova/modulemapper').getOriginalSymbol(window, 'navigator.battery');
 
                 if (origBattery) {
                     subscribe(origBattery);

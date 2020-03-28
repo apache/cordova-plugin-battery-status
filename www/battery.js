@@ -17,7 +17,7 @@
  * specific language governing permissions and limitations
  * under the License.
  *
-*/
+ */
 
 /**
  * This class contains information about the current battery status.
@@ -44,9 +44,9 @@ var Battery = function () {
 };
 
 function handlers () {
-    return battery.channels.batterystatus.numHandlers +
-        battery.channels.batterylow.numHandlers +
-        battery.channels.batterycritical.numHandlers;
+    return (
+        battery.channels.batterystatus.numHandlers + battery.channels.batterylow.numHandlers + battery.channels.batterycritical.numHandlers
+    );
 }
 
 /**
@@ -55,7 +55,7 @@ function handlers () {
  * appropriately (and hopefully save on battery life!).
  */
 Battery.onHasSubscribersChange = function () {
-  // If we just registered the first handler, make sure native listener is started.
+    // If we just registered the first handler, make sure native listener is started.
     if (this.numHandlers === 1 && handlers() === 1) {
         exec(battery._status, battery._error, 'Battery', 'start', []);
     } else if (handlers() === 0) {
@@ -69,10 +69,8 @@ Battery.onHasSubscribersChange = function () {
  * @param {Object} info            keys: level, isPlugged
  */
 Battery.prototype._status = function (info) {
-
     if (info) {
         if (battery._level !== info.level || battery._isPlugged !== info.isPlugged) {
-
             if (info.level === null && battery._level !== null) {
                 return; // special case where callback is called because we stopped listening to the native side.
             }
@@ -80,7 +78,8 @@ Battery.prototype._status = function (info) {
             // Something changed. Fire batterystatus event
             cordova.fireWindowEvent('batterystatus', info);
 
-            if (!info.isPlugged) { // do not fire low/critical if we are charging. issue: CB-4520
+            // do not fire low/critical if we are charging. issue: CB-4520
+            if (!info.isPlugged) {
                 // note the following are NOT exact checks, as we want to catch a transition from
                 // above the threshold to below. issue: CB-4519
                 if (battery._level > STATUS_CRITICAL && info.level <= STATUS_CRITICAL) {
@@ -104,6 +103,6 @@ Battery.prototype._error = function (e) {
     console.log('Error initializing Battery: ' + e);
 };
 
-var battery = new Battery(); // jshint ignore:line
+var battery = new Battery();
 
 module.exports = battery;

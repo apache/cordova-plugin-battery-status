@@ -21,8 +21,7 @@
 
 /* global Windows, WinJS, BatteryStatus */
 
-var PowerManager = Windows && Windows.System &&
-    Windows.System.Power && Windows.System.Power.PowerManager;
+var PowerManager = Windows && Windows.System && Windows.System.Power && Windows.System.Power.PowerManager;
 
 if (PowerManager) {
     var pluginCallback;
@@ -31,10 +30,13 @@ if (PowerManager) {
             return;
         }
 
-        pluginCallback({
-            level: PowerManager.remainingChargePercent,
-            isPlugged: PowerManager.powerSupplyStatus !== Windows.System.Power.PowerSupplyStatus.notPresent
-        }, { keepCallback: true });
+        pluginCallback(
+            {
+                level: PowerManager.remainingChargePercent,
+                isPlugged: PowerManager.powerSupplyStatus !== Windows.System.Power.PowerSupplyStatus.notPresent
+            },
+            { keepCallback: true }
+        );
     };
 
     var BatteryWin10 = {
@@ -57,15 +59,13 @@ if (PowerManager) {
     };
 
     require('cordova/exec/proxy').add('Battery', BatteryWin10);
-
 } else {
-
     var stopped;
 
     var handleResponse = function (successCb, errorCb, jsonResponse) {
         var info = JSON.parse(jsonResponse);
 
-        if (info.hasOwnProperty('exceptionMessage')) {
+        if ({}.hasOwnProperty.call(info, 'exceptionMessage')) {
             errorCb(info.exceptionMessage);
             return;
         }
@@ -80,17 +80,22 @@ if (PowerManager) {
             }
 
             function getBatteryStatusLevelChangeEvent (success, error) {
-                return BatteryStatus.BatteryStatus.getBatteryStatusChangeEvent().done(function (result) {
-                    if (stopped) {
-                        return;
+                return BatteryStatus.BatteryStatus.getBatteryStatusChangeEvent().done(
+                    function (result) {
+                        if (stopped) {
+                            return;
+                        }
+
+                        handleResponse(success, error, result);
+
+                        setTimeout(function () {
+                            getBatteryStatusLevelChangeEvent(success, error);
+                        }, 0);
+                    },
+                    function (err) {
+                        fail(err);
                     }
-
-                    handleResponse(success, error, result);
-
-                    setTimeout(function () { getBatteryStatusLevelChangeEvent(success, error); }, 0);
-                }, function (err) {
-                    fail(err);
-                });
+                );
             }
 
             // Battery API supported on Phone devices only so in case of
