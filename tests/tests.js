@@ -19,22 +19,20 @@
  *
  */
 
-/* eslint-env jasmine */
-/* global Windows, WinJS */
-
+/* global Windows, WinJS, cordova */
 exports.defineAutoTests = function () {
-    var hasPowerManagerAPI = cordova.platformId === 'windows' && // eslint-disable-line no-undef
-        Windows && Windows.System && Windows.System.Power &&
-        Windows.System.Power.PowerManager;
+    var hasPowerManagerAPI =
+        cordova.platformId === 'windows' && Windows && Windows.System && Windows.System.Power && Windows.System.Power.PowerManager;
 
-    var batteryStatusUnsupported = (cordova.platformId === 'windows8' || // eslint-disable-line no-undef
-        // We don't test battery status on Windows when there is no corresponding APIs available
-        cordova.platformId === 'windows') && !(hasPowerManagerAPI || WinJS.Utilities.isPhone); // eslint-disable-line no-undef
+    var batteryStatusUnsupported =
+        (cordova.platformId === 'windows8' ||
+            // We don't test battery status on Windows when there is no corresponding APIs available
+            cordova.platformId === 'windows') &&
+        !(hasPowerManagerAPI || WinJS.Utilities.isPhone);
 
     var onEvent;
 
     describe('Battery (navigator.battery)', function () {
-
         it('battery.spec.1 should exist', function () {
             if (batteryStatusUnsupported) {
                 pending('Battery status is not supported on windows store');
@@ -45,9 +43,7 @@ exports.defineAutoTests = function () {
     });
 
     describe('Battery Events', function () {
-
         describe('batterystatus', function () {
-
             afterEach(function () {
                 if (!batteryStatusUnsupported) {
                     try {
@@ -77,12 +73,10 @@ exports.defineAutoTests = function () {
                     expect(onEvent).toHaveBeenCalled();
                     done();
                 }, 100);
-
             });
         });
 
         describe('batterylow', function () {
-
             afterEach(function () {
                 if (!batteryStatusUnsupported) {
                     try {
@@ -117,7 +111,6 @@ exports.defineAutoTests = function () {
                     expect(onEvent).toHaveBeenCalled();
                     done();
                 }, 100);
-
             });
 
             it('battery.spec.3.1 should fire batterylow event (30 -> 19)', function (done) {
@@ -200,7 +193,6 @@ exports.defineAutoTests = function () {
         });
 
         describe('batterycritical', function () {
-
             afterEach(function () {
                 if (!batteryStatusUnsupported) {
                     try {
@@ -235,7 +227,6 @@ exports.defineAutoTests = function () {
                     expect(onEvent).toHaveBeenCalled();
                     done();
                 }, 100);
-
             });
 
             it('battery.spec.4.1 should fire batterycritical event (19 -> 4)', function (done) {
@@ -262,7 +253,6 @@ exports.defineAutoTests = function () {
                     expect(onEvent).toHaveBeenCalled();
                     done();
                 }, 100);
-
             });
 
             it('battery.spec.4.2 should fire batterycritical event (100 -> 4) when decreases', function (done) {
@@ -351,7 +341,6 @@ exports.defineAutoTests = function () {
 //* *****************************************************************************************
 
 exports.defineManualTests = function (contentEl, createActionButton) {
-
     /* Battery */
     function updateInfo (info) {
         document.getElementById('levelValue').innerText = info.level;
@@ -427,8 +416,8 @@ exports.defineManualTests = function (contentEl, createActionButton) {
         return table;
     }
     // Battery Elements
-    var batteryElements =
-        [{
+    var batteryElements = [
+        {
             id: 'statusTag',
             content: 'Status:',
             tag: 'div',
@@ -436,7 +425,8 @@ exports.defineManualTests = function (contentEl, createActionButton) {
                 row: 0,
                 cell: 0
             }
-        }, {
+        },
+        {
             id: 'statusValue',
             content: '',
             tag: 'div',
@@ -444,7 +434,8 @@ exports.defineManualTests = function (contentEl, createActionButton) {
                 row: 0,
                 cell: 1
             }
-        }, {
+        },
+        {
             id: 'levelTag',
             content: 'Level:',
             tag: 'div',
@@ -452,7 +443,8 @@ exports.defineManualTests = function (contentEl, createActionButton) {
                 row: 1,
                 cell: 0
             }
-        }, {
+        },
+        {
             id: 'levelValue',
             content: '',
             tag: 'div',
@@ -460,7 +452,8 @@ exports.defineManualTests = function (contentEl, createActionButton) {
                 row: 1,
                 cell: 1
             }
-        }, {
+        },
+        {
             id: 'pluggedTag',
             content: 'Plugged:',
             tag: 'div',
@@ -468,7 +461,8 @@ exports.defineManualTests = function (contentEl, createActionButton) {
                 row: 2,
                 cell: 0
             }
-        }, {
+        },
+        {
             id: 'pluggedValue',
             content: '',
             tag: 'div',
@@ -476,7 +470,8 @@ exports.defineManualTests = function (contentEl, createActionButton) {
                 row: 2,
                 cell: 1
             }
-        }, {
+        },
+        {
             id: 'lowTag',
             content: 'Low:',
             tag: 'div',
@@ -484,7 +479,8 @@ exports.defineManualTests = function (contentEl, createActionButton) {
                 row: 3,
                 cell: 0
             }
-        }, {
+        },
+        {
             id: 'lowValue',
             content: '',
             tag: 'div',
@@ -492,7 +488,8 @@ exports.defineManualTests = function (contentEl, createActionButton) {
                 row: 3,
                 cell: 1
             }
-        }, {
+        },
+        {
             id: 'criticalTag',
             content: 'Critical:',
             tag: 'div',
@@ -500,7 +497,8 @@ exports.defineManualTests = function (contentEl, createActionButton) {
                 row: 4,
                 cell: 0
             }
-        }, {
+        },
+        {
             id: 'criticalValue',
             content: '',
             tag: 'div',
@@ -509,7 +507,7 @@ exports.defineManualTests = function (contentEl, createActionButton) {
                 cell: 1
             }
         }
-        ];
+    ];
 
     // Title audio results
     var div = document.createElement('h2');
@@ -525,7 +523,8 @@ exports.defineManualTests = function (contentEl, createActionButton) {
     div.setAttribute('align', 'center');
     contentEl.appendChild(div);
 
-    contentEl.innerHTML += '<h3>Battery Status Tests</h3>' +
+    contentEl.innerHTML +=
+        '<h3>Battery Status Tests</h3>' +
         'Will update values for level and plugged when they change. If battery low and critical values are false, they will get updated in status box, but only once' +
         '<div id="addBS"></div><div id="remBs"></div>' +
         '<h3>Battery Low Tests</h3>' +
@@ -535,22 +534,46 @@ exports.defineManualTests = function (contentEl, createActionButton) {
         '</p> Will update value for battery critical to true when battery is below 5%' +
         '<div id="addBc"></div><div id="remBc"></div>';
 
-    createActionButton('Add "batterystatus" listener', function () {
-        addBattery();
-    }, 'addBS');
-    createActionButton('Remove "batterystatus" listener', function () {
-        removeBattery();
-    }, 'remBs');
-    createActionButton('Add "batterylow" listener', function () {
-        addLow();
-    }, 'addBl');
-    createActionButton('Remove "batterylow" listener', function () {
-        removeLow();
-    }, 'remBl');
-    createActionButton('Add "batterycritical" listener', function () {
-        addCritical();
-    }, 'addBc');
-    createActionButton('Remove "batterycritical" listener', function () {
-        removeCritical();
-    }, 'remBc');
+    createActionButton(
+        'Add "batterystatus" listener',
+        function () {
+            addBattery();
+        },
+        'addBS'
+    );
+    createActionButton(
+        'Remove "batterystatus" listener',
+        function () {
+            removeBattery();
+        },
+        'remBs'
+    );
+    createActionButton(
+        'Add "batterylow" listener',
+        function () {
+            addLow();
+        },
+        'addBl'
+    );
+    createActionButton(
+        'Remove "batterylow" listener',
+        function () {
+            removeLow();
+        },
+        'remBl'
+    );
+    createActionButton(
+        'Add "batterycritical" listener',
+        function () {
+            addCritical();
+        },
+        'addBc'
+    );
+    createActionButton(
+        'Remove "batterycritical" listener',
+        function () {
+            removeCritical();
+        },
+        'remBc'
+    );
 };
