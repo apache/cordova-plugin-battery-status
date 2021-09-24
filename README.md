@@ -21,10 +21,6 @@ description: Get events for device battery level.
 #         under the License.
 -->
 
-|AppVeyor|Travis CI|
-|:-:|:-:|
-|[![Build status](https://ci.appveyor.com/api/projects/status/github/apache/cordova-plugin-battery-status?branch=master)](https://ci.appveyor.com/project/ApacheSoftwareFoundation/cordova-plugin-battery-status)|[![Build Status](https://travis-ci.org/apache/cordova-plugin-battery-status.svg?branch=master)](https://travis-ci.org/apache/cordova-plugin-battery-status)|
-
 # cordova-plugin-battery-status
 
 This plugin provides an implementation of an old version of the [Battery Status Events API][w3c_spec]. It adds the following three events to the `window` object:
