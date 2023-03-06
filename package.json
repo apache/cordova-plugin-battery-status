@@ -8,8 +8,7 @@
     "platforms": [
       "android",
       "ios",
-      "browser",
-      "windows"
+      "browser"
     ]
   },
   "repository": "github:apache/cordova-plugin-battery-status",
