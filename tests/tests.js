@@ -19,9 +19,7 @@
  *
  */
 
-/* global Windows, WinJS, cordova */
 exports.defineAutoTests = function () {
-
     var onEvent;
 
     describe('Battery (navigator.battery)', function () {
@@ -254,7 +252,6 @@ exports.defineAutoTests = function () {
             });
 
             it('battery.spec.4.4 should not fire batterycritical event (6 -> 5) if charging', function (done) {
-
                 onEvent = jasmine.createSpy('BatteryCritical');
 
                 window.addEventListener('batterycritical', onEvent, false);
