@@ -54,15 +54,6 @@
 	    <source-file src="src/ios/CDVBattery.m" />
     </platform>
 
-    <!-- windows -->
-    <platform name="windows">
-        <js-module src="src/windows/BatteryProxy.js" name="Battery">
-            <runs />
-        </js-module>
-
-        <framework src="src/windows/BatteryStatus.winmd" custom="true" target="phone"/>
-    </platform>
-
     <!-- browser -->
     <platform name="browser">
         <js-module src="src/browser/BatteryProxy.js" name="Battery">

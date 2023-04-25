@@ -60,7 +60,6 @@ Fires when the battery charge percentage changes by at least 1 percent, or when 
 
 - iOS
 - Android
-- Windows
 - Browser (Chrome, Firefox, Opera)
 
 ### Quirks: Android
@@ -83,7 +82,6 @@ Fires when the battery charge percentage reaches the low charge threshold. This 
 
 - iOS
 - Android
-- Windows
 - Browser (Chrome, Firefox, Opera)
 
 ## batterycritical event
@@ -102,7 +100,6 @@ Fires when the battery charge percentage reaches the critical charge threshold. 
 
 - iOS
 - Android
-- Windows
 - Browser (Chrome, Firefox, Opera)
 
 
