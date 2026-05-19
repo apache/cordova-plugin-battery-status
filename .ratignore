@@ -1,0 +1,4 @@
+\.(.*)
+(.*).txt
+index.d.ts
+node_modules
