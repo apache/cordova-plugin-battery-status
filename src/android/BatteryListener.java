@@ -71,7 +71,8 @@ public class BatteryListener extends CordovaPlugin {
                         updateBatteryInfo(intent);
                     }
                 };
-                webView.getContext().registerReceiver(this.receiver, intentFilter);
+                Intent batteryStatus = webView.getContext().registerReceiver(this.receiver, intentFilter);
+                updateBatteryInfo(batteryStatus);
             }
 
             // Don't return any result now, since status results will be sent when events come in from broadcast receiver
