@@ -20,7 +20,7 @@
  */
 
 exports.defineAutoTests = function () {
-    var onEvent;
+    let onEvent;
 
     describe('Battery (navigator.battery)', function () {
         it('battery.spec.1 should exist', function () {
@@ -327,19 +327,18 @@ exports.defineManualTests = function (contentEl, createActionButton) {
 
     // Generate Dynamic Table
     function generateTable (tableId, rows, cells, elements) {
-        var table = document.createElement('table');
-        for (var r = 0; r < rows; r++) {
-            var row = table.insertRow(r);
-            for (var c = 0; c < cells; c++) {
-                var cell = row.insertCell(c);
+        const table = document.createElement('table');
+        for (let r = 0; r < rows; r++) {
+            const row = table.insertRow(r);
+            for (let c = 0; c < cells; c++) {
+                const cell = row.insertCell(c);
                 cell.setAttribute('align', 'center');
-                for (var e in elements) {
+                for (const e in elements) {
                     if (elements[e].position.row === r && elements[e].position.cell === c) {
-                        var htmlElement = document.createElement(elements[e].tag);
-                        var content;
+                        const htmlElement = document.createElement(elements[e].tag);
 
                         if (elements[e].content !== '') {
-                            content = document.createTextNode(elements[e].content);
+                            const content = document.createTextNode(elements[e].content);
                             htmlElement.appendChild(content);
                         }
                         if (elements[e].type) {
@@ -356,7 +355,7 @@ exports.defineManualTests = function (contentEl, createActionButton) {
         return table;
     }
     // Battery Elements
-    var batteryElements = [
+    const batteryElements = [
         {
             id: 'statusTag',
             content: 'Status:',
@@ -450,12 +449,12 @@ exports.defineManualTests = function (contentEl, createActionButton) {
     ];
 
     // Title audio results
-    var div = document.createElement('h2');
+    let div = document.createElement('h2');
     div.appendChild(document.createTextNode('Battery Status'));
     div.setAttribute('align', 'center');
     contentEl.appendChild(div);
 
-    var batteryTable = generateTable('info', 5, 3, batteryElements);
+    const batteryTable = generateTable('info', 5, 3, batteryElements);
     contentEl.appendChild(batteryTable);
 
     div = document.createElement('h2');
